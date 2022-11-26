@@ -1,0 +1,216 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+% formatting imports
+\usepackage{graphicx}
+\usepackage[margin=1cm]{caption}
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage[section]{placeins}
+\usepackage{array}
+
+% math imports
+\usepackage{siunitx}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{bbold}
+
+\usepackage{todonotes}
+\usepackage{longtable}
+
+\usepackage[sorting=none]{biblatex}
+\addbibresource{refs.bib}
+
+\newcommand{\del}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\delsquare}[2]{\frac{\partial^2 #1}{\partial #2 ^2}}
+
+\newcommand{\full}[2]{\frac{d #1}{d #2}}
+\newcommand{\fullsquare}[2]{\frac{d^2 #1}{d #2 ^2}}
+
+\title{IGNORE THIS PAGE IN CURRENT VERSION}
+
+\DeclareUnicodeCharacter{2212}{-}
+\begin{document}
+
+\maketitle
+
+\begin{center}
+    Massachusetts Institute of Technology \\
+    Department of Electrical Engineering and Computer Science
+\end{center}
+
+\begin{center}
+    Proposal for Thesis Research in Partial Fulfillment\\ of the Requirements for the Degree of\\
+Masters of Engineering
+\end{center}
+
+\vfill
+
+\begin{tabular}{rl}
+\textbf{Title:} & \textbf{Defect Identification in Superconducting 2-Terminal Devices} \\
+\\
+\textbf{Submitted by:} & T. Dandachi \\
+              & 69 Chestnut St. \\
+              & Cambridge, MA 02139
+\end{tabular}
+
+\vspace{15mm}
+\begin{tabular}{@{}p{1.5in}p{4in}@{}}
+\textbf{Signature of author:} & \hrulefill \\
+\end{tabular}
+
+\vfill
+
+\textbf{Expected Date of Completion:} May 2022
+
+\vfill
+
+\textbf{Laboratory:} Quantum Nanostructures and Nanofabrication under the Research Laboratory for Electronics
+
+% \vfill
+
+% \textbf{Abstract:}
+
+% Simulating the operation of a superconducting device
+
+\vfill
+
+\textbf{Supervision Agreement:}
+
+The program outlined in this proposal is adequate for a Master's thesis. The supplies and facilities required are available, and I am willing to supervise the research and evaluate the thesis report.
+
+\vspace{15 mm}
+\begin{tabular}{@{}p{1.5in}p{4in}@{}}
+  & \hrulefill \\
+& K. K. Berggren, Prof. of Elec. Eng.
+\end{tabular}
+
+\newpage
+
+\tableofcontents
+
+\section{Introduction}
+
+\subsection{Non-linearity in superconducting nanowires}
+
+\subsection{Nanowire Elements}
+
+\subsubsection{SNSPDs}
+
+\subsubsection{SNSPIs}
+
+\subsubsection{Tapers}
+
+\subsubsection{hTron}
+
+\subsection{Problems Simulating Nanowires}
+
+\section{SPICE}
+
+spice-daemon and qnn-spice
+
+\subsection{QNN SPICE}
+
+\subsection{Dynamic Models}
+
+E.g. Tapers
+
+\subsection{Generating Noise}
+
+\subsection{Arbitrary S$_{xy}$ models}
+
+\subsubsection{2-port model}
+
+E.g. Tapers!
+
+\subsubsection{n-port model}
+
+E.g. Bias Tee
+
+\subsection{Postprocessing}
+
+\section{Model Stability}
+
+\subsection{Stability in F.D.M.}
+
+\subsubsection{Stabiltiy in LTSpice}
+
+\subsection{Malicious Circuits}
+
+Why? How? (tline timestepping with half res?)
+
+\subsubsection{Proof of Equivalence to Stability}
+
+\subsection{Better nanowire models}
+
+\subsubsection{Current nanowire model}
+
+Layout of in-depth model
+
+\subsubsection{S.A. of current nanowire model}
+
+\subsubsection{Different Integrator}
+
+\subsubsection{1 Element Models}
+
+\subsubsection{0 Resistance Models}
+
+\section{Efficient Simulation}
+
+Julia simulator
+
+\subsection{Tline Model}
+
+\subsubsection{Equivalent Circuit}
+
+\subsubsection{Kernel}
+
+\subsubsection{GPU}
+
+\subsection{Harmonic Balance}
+
+\subsubsection{TD Assist}
+
+\subsection{Device Symmetries}
+
+\subsection{Coupling Diff. Eq. (or Thermal Model?)}
+
+Maybe sections should be separate. Phonon-Electron transport.
+
+Complex electric coupling
+
+\subsubsection{TDC}
+
+\subsubsection{SNSPI coupling}
+
+\subsection{Precomputation}
+
+\subsection{ML Optimization}
+
+\subsubsection{Symbolic Solver}
+
+\subsubsection{Tapers}
+
+Note on resistive groups? -> Sonnet?
+
+\subsubsection{Differentiable Simulator}
+
+\subsubsection{Inverse design}
+
+\subsubsection{Monte Carlo Simulation}
+
+\section{Time Domain Reflectometry}
+
+\subsection{Idea}
+
+\subsection{Optimal Search Theory}
+
+\subsection{Simulation}
+
+\subsection{Experimental Setup}
+
+\subsection{Results}
+
+\subsection{Future Ideas}
+
+\end{document}
