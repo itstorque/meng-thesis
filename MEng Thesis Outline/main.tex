@@ -7,6 +7,8 @@
 \usepackage[section]{placeins}
 \usepackage{array}
 
+\usepackage{setspace}
+
 % math imports
 \usepackage{siunitx}
 \usepackage{amsmath}
@@ -21,51 +23,58 @@
 \usepackage[sorting=none]{biblatex}
 \addbibresource{refs.bib}
 
+\usepackage[fontsize=12pt]{fontsize}
+
 \newcommand{\del}[2]{\frac{\partial #1}{\partial #2}}
 \newcommand{\delsquare}[2]{\frac{\partial^2 #1}{\partial #2 ^2}}
 
 \newcommand{\full}[2]{\frac{d #1}{d #2}}
 \newcommand{\fullsquare}[2]{\frac{d^2 #1}{d #2 ^2}}
 
+\newcommand{\ccf}[1]{`\textsf{#1}'}
+\newcommand{\cf}[1]{\textsf{#1}}
+
 \title{IGNORE THIS PAGE IN CURRENT VERSION}
 
 \DeclareUnicodeCharacter{2212}{-}
 \begin{document}
 
-\maketitle
+\doublespacing
 
-\begin{center}
-    Massachusetts Institute of Technology \\
-    Department of Electrical Engineering and Computer Science
-\end{center}
+% \maketitle
 
-\begin{center}
-    Proposal for Thesis Research in Partial Fulfillment\\ of the Requirements for the Degree of\\
-Masters of Engineering
-\end{center}
+% \begin{center}
+%     Massachusetts Institute of Technology \\
+%     Department of Electrical Engineering and Computer Science
+% \end{center}
 
-\vfill
+% \begin{center}
+%     Proposal for Thesis Research in Partial Fulfillment\\ of the Requirements for the Degree of\\
+% Masters of Engineering
+% \end{center}
 
-\begin{tabular}{rl}
-\textbf{Title:} & \textbf{Defect Identification in Superconducting 2-Terminal Devices} \\
-\\
-\textbf{Submitted by:} & T. Dandachi \\
-              & 69 Chestnut St. \\
-              & Cambridge, MA 02139
-\end{tabular}
+% \vfill
 
-\vspace{15mm}
-\begin{tabular}{@{}p{1.5in}p{4in}@{}}
-\textbf{Signature of author:} & \hrulefill \\
-\end{tabular}
+% \begin{tabular}{rl}
+% \textbf{Title:} & \textbf{Defect Identification in Superconducting 2-Terminal Devices} \\
+% \\
+% \textbf{Submitted by:} & T. Dandachi \\
+%               & 69 Chestnut St. \\
+%               & Cambridge, MA 02139
+% \end{tabular}
 
-\vfill
+% \vspace{15mm}
+% \begin{tabular}{@{}p{1.5in}p{4in}@{}}
+% \textbf{Signature of author:} & \hrulefill \\
+% \end{tabular}
 
-\textbf{Expected Date of Completion:} May 2022
+% \vfill
 
-\vfill
+% \textbf{Expected Date of Completion:} May 2022
 
-\textbf{Laboratory:} Quantum Nanostructures and Nanofabrication under the Research Laboratory for Electronics
+% \vfill
+
+% \textbf{Laboratory:} Quantum Nanostructures and Nanofabrication under the Research Laboratory for Electronics
 
 % \vfill
 
@@ -73,25 +82,33 @@ Masters of Engineering
 
 % Simulating the operation of a superconducting device
 
-\vfill
+% \vfill
 
-\textbf{Supervision Agreement:}
+% \textbf{Supervision Agreement:}
 
-The program outlined in this proposal is adequate for a Master's thesis. The supplies and facilities required are available, and I am willing to supervise the research and evaluate the thesis report.
+% The program outlined in this proposal is adequate for a Master's thesis. The supplies and facilities required are available, and I am willing to supervise the research and evaluate the thesis report.
 
-\vspace{15 mm}
-\begin{tabular}{@{}p{1.5in}p{4in}@{}}
-  & \hrulefill \\
-& K. K. Berggren, Prof. of Elec. Eng.
-\end{tabular}
+% \vspace{15 mm}
+% \begin{tabular}{@{}p{1.5in}p{4in}@{}}
+%   & \hrulefill \\
+% & K. K. Berggren, Prof. of Elec. Eng.
+% \end{tabular}
+
+% \newpage
+
+\tableofcontents
 
 \newpage
 
-\tableofcontents
+% figures are here: https://www.icloud.com/keynote/094kHrSTQlvohxqCHGUmZJXcg#thesis
 
 \section{Introduction}
 
 \subsection{Non-linearity in superconducting nanowires}
+
+Inductance
+
+Switching
 
 \subsection{Nanowire Elements}
 
@@ -105,19 +122,151 @@ The program outlined in this proposal is adequate for a Master's thesis. The sup
 
 \subsection{Problems Simulating Nanowires}
 
-\section{SPICE}
+\section{spice-daemon --- a Python wrapper for SPICE solvers}
 
-spice-daemon and qnn-spice
+% spice-daemon and qnn-spice
+
+
+
+\subsection{SPICE}
+
+One popular way of simulating electronics is using SPICE 
+(Simulation Program with Integrated Circuit Emphasis) first developed
+at University of California, Berkley in the early 70s. 
+SPICE solvers are particularly useful as they combine DC analysis (also known as
+operating point analysis), AC analysis (linear small-signal frequency domain analysis) and 
+transient analysis (time-domain large-signal solution of nonlinear differential algebraic equations)
+among other analysis methods.\\
+
+Since then, Berkley SPICE
+inspired multiple other SPICE solvers including LTspice.
+\todo{more on spice and ref} \todo{maybe FDM?}
+LTspice is a popular free circuit simulator that is widely used \todo{ref}. SPICE models for 
+superconducting electronics exist \todo{nanowire, hTron, nTron...}. 
+
+\subsubsection{Netlists and Schematic Capture}
+
+Interfacing with SPICE software involves generating a netlist --- a code snippet that defines
+how the different circuit elements are connected to each other. Netlists have a \ccf{.net} (and 
+sometimes a \ccf{.cir}) extension and can be used across different SPICE implementations. 
+Netlists are encoded as ascii files and as such editing them is straightforward.\\
+
+The netlist's syntax \todo{should i do this?}\\
+
+Some commercial version of SPICE
+software, such as LTspice, add Schematic Capture capability. Schematic Capture allows for a
+native GUI encoding of a circuit to be converted into a netlist (in LTspice, that is a 
+schematic file with the extension \ccf{.asc}).\\
+
+\subsubsection{Output}
+
+\subsubsection{Models}
+
+ASY + lib
+
+Saving Location
+
+\subsubsection{Dependent Sources}
+
+\subsubsection{Transient Simulation}
+
+Problem/Why?
+
+Hard to simulate effects
+
+Fitting to data
+
+Complicated analysis toolkits
+
+Noise/custom inputs
+
+Device level modelling
+
+Solution/What?
+
+Wrapper for spice solvers like LTspice.
+
+
 
 \subsection{QNN SPICE}
 
+In a collaborative setup where SPICE models might be edited (either continuously or infrequent small fixes,) 
+having the ability to track the version of the models is important. One solution is to include a version 
+string that the editor updates between revisions. Doing so however doesn't handle merge conflicts natively and
+doesn't track file differences. From these requirements, the widely used version tracking software git can be
+used to track the file differences and users need to always re-download the latest version of the model.
+
+Ideally, every time a model file is downloaded, it gets placed in LTspice's library folder that contains all the base 
+models. This process needs to be repeated for each model and it becomes tedious. The other alternative is have
+the models all live in the same directory as your circuits and each model you use be downloaded manually into
+that directory. The side-effect is you don't need to update all the models every time, however, the directory becomes
+cluttered quickly and you will need multiple copies of every model on your system.
+
+This is where qnn-spice comes in, MIT's Quantum Nanostructures and Nanofabrication group (QNN) has multiple
+repositories, each with multiple spice models. By having a single repository track every repository containing
+SPICE models, a single repository could track all the changes across every model produced by the QNN group. 
+This single repository method takes advantage of git submodules, which tracks the head of each sub-repository.
+A helper update script pulls every submodule and creates symbolic links in LTspice's library folder to each model.
+The model library and symbol files to be included are specified in a YAML file -- a human-readable data-
+serialization language.
+
+The use of symbolic links means if a user edits the model in the cloned repository, LTspice sees the updated file.
+When the update script pulls the main and sub repositories, the previous symbolic links are deleted and new ones are 
+made. The sub-repository structure is copied into two \cf{qnn-spice} folders are created in the \cf{sub/} and \cf{sym/} 
+subfolders of LTspice's library folder. 
+
+The YAML file maps the path of each file to include in the repositories to a destination path in the two
+\cf{qnn-spice} subfolders based on their extension. \todo{how to make a custom module grouping?}
+
+\todo[inline]{Note for updates: lib files automatically updated. Schematic Capture related files (asy) aren't updated.}
+
+\todo[inline]{Include library location?}
+
+\subsection{Updating models using spice-daemon}
+
+The main input for spice-daemon is a YAML file that defines simulation parameters, spice-daemon models and
+toolkits. A YAML file can also be version tracked, allowing all parameterizations to be known by the host
+python script.\todo[]{cool because u can save runs behind hidden menus and monte carlo things}
+
+LTspice generates multiple files during every run, including a log file, a netlist file, an optional 
+operating point analysis raw binary file and a raw binary file that includes the code of the simulation 
+that is run. spice-daemon tracks the edit history of the log file, a YAML specification file and the 
+circuit schematic using the \cf{WatchDog} object.
+
+Every \cf{Simulation} object defines a couple of important \cf{File} objects that are always present regardless
+of the user's setup for LTspice. \cf{File}s are an extension of python's \cf{Path} object that can additionally:
+\begin{enumerate}
+    \item track edit timelines,
+    \item detect LTspice-native file encodings,
+    \item generate dictionaries from YAML files, and
+    \item read/write to files.
+\end{enumerate}
+
+The \cf{WatchDog} module periodically checks for edits on a \cf{Simulation}'s \cf{watch\_files},
+a set of files that indicate a need to regenerate some (or all) spice-daemon produced files.
+For instance, if someone edits an attribute for a component in the YAML specification file, 
+the component library file needs to be regenerated to reflect the change in the attribute.
+
+\todo[inline]{note on do not delete files after closing LTspice on Mac checkbox?}
+
+\todo[inline]{setting up a spice-daemon simulation}
+
 \subsection{Dynamic Models}
 
-E.g. Tapers
+LTspice components are parametrizable using a constant global parameter space that can be used when
+math expressions are being evaluated (such as the output voltage of a behavioural source or the inductance 
+of an inductor). spice-daemon adds the ability to parameterize components beyond expressions by granting the
+ability to edit a PWL file and the netlist of the model between runs.
 
-\subsection{Generating Noise}
+\subsubsection{Tapers}
+
+\subsubsection{Generating Noise}
 
 \subsection{Arbitrary S$_{xy}$ models}
+
+Diagram of 2port and n-port Sxy networks
+
+Inductor, Cap model for T.D.
 
 \subsubsection{2-port model}
 
@@ -127,7 +276,7 @@ E.g. Tapers!
 
 E.g. Bias Tee
 
-\subsection{Postprocessing}
+\subsection{Postprocessing/Toolkits}
 
 \section{Model Stability}
 
