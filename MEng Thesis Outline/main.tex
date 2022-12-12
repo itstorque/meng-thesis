@@ -251,16 +251,87 @@ the component library file needs to be regenerated to reflect the change in the 
 
 \todo[inline]{setting up a spice-daemon simulation}
 
+\todo[inline]{Diagram of the listen and write files}
+
 \subsection{Dynamic Models}
 
 LTspice components are parametrizable using a constant global parameter space that can be used when
 math expressions are being evaluated (such as the output voltage of a behavioural source or the inductance 
 of an inductor). spice-daemon adds the ability to parameterize components beyond expressions by granting the
 ability to edit a PWL file and the netlist of the model between runs.
+\todo[]{note on all libs being merged into one!}
 
-\subsubsection{Tapers}
+\subsubsection{Lumped Element Transmission Lines and Tapers}
+
+One type of dynamic model that is incorporated into spice-daemon are lumped 
+element transmission lines. Instead of using LTspice's built-in transmission
+line models (either the Lossless Transmission Lines (T elements) or the 
+Lossy Transmission Lines (O elements)), spice-daemon allows you to specify a
+lumped-element version. 
+
+The Lossless Transmission Line model has a bunch of limitations: it models only one propagation mode,
+ doesn't support non-linear response functions and doesn't 
+model the DC behaviour correctly. The Lossy Transmission Line also suffers from multiple caveats,
+it doesn't support frequency dependence for loss and it also doesn't support non-linear response 
+functions. %https://ltwiki.org/index.php?title=O-device_(Lossy_Transmission_Line)_and_T-device_(Lossless_Transmission_Line)_modelling_issues https://ltwiki.org/files/LTspiceHelp.chm.html
+
+For well-defined behaviour with non-convolution based models, it is helpful to be able to run
+a lumped element model from within LTspice. However, this would involve laying down thousands 
+of repeating chunks of elements manually. One use of dynamic models is generating a model 
+that encodes variable length logic. In this method of programming a lumped element transmission
+line, by changing one parameter in the configuration file, we are able to affect the circuit
+topology and add a large number of elements - this type of automation is not possible without
+some sort of external daemon.
+
+One extension to this one-to-many mapping for the transmission line is our ability to program
+lumped-element tapers in. The transmission line models in LTspice work for lines with constant 
+parameters (impedance, propagation velocity, loss etc.). With a lumped element model that is fully
+controlled by spice-daemon, changing the impedance of one port can map the inductance and capacitance
+of each finite element to a pair of values based on the taper geometry chosen. This adds another layer
+of abstraction where we can define an impedance matched transmission line with a klopfenstein geometry
+between two impedances $Z_{in}, Z_{out}$. If we change $Z_{in}$, the spice-daemon instance calculates
+new tapering parameters smoothly perturbing the impedance of the line from $Z_{in}$ to $Z_{out}$ and
+updates the library file for the taper element. When LTspice runs a new simulation, it pulls the latest
+lib file with the new impedance matched taper.
 
 \subsubsection{Generating Noise}
+
+\todo[]{why this is important for simulating nanowires}
+
+Noise analysis in LTspice is limited, especially on non-linear systems. Since superconducting electronics
+are highly non-linear, it is essential that we run all our analysis in the transient analysis mode (time-basis 
+small-signal AC simulation). In this mode, we can use a voltage source with an LTspice native math command
+to generate noise such as \cf{noise}, \cf{random}, \cf{gaussian}, \cf{white}. However, these noise commands
+generate noise that is correlated amongst instances and is not gaussian in nature. One workaround that was
+discovered by the LTspice community was using 4 voltage sources each producing a shifted seed value for 
+gaussian noise that guarantees that the seed doesn't overlap with the simulation time. By concatenating the
+outputs of the behavioural voltage sources, the central limit theorem makes the noise distribution behave more 
+gaussian. Note that the number 4 was picked due to a trade-off between the complexity of generating and simulating
+that noise and how gaussian it is -- the more sources there are, the more gaussian the noise distribution is.
+
+One other workaround is to use PWL files. PWL files allow you to input piece-wise linear functions into LTspice
+sources that are not necessarily behavioural. The PWL opeartion mode maps (time, value) pairs to a continuous 
+output value based on the simulation time. However, if a simulation has $N$ points it is solved at and you 
+provide $N$ noise points, then there is no extrapolation that occurs, provided these points are chosen at random 
+from a gaussian distribution, then the voltage source will generate noise that has a gaussian probability density
+function. The process of re-creating this noise file and making sure there is enough data points and that the time
+axes of the simulation and the noise data is matched is tedious.
+
+To solve this issue, spice-daemon can handle the creation of noise sources and their accompanying PWL files,
+abstracting them behind one symbol file. The user defines a noise source type (voltage or current), the 
+noise distribution it should follow (poisson, gaussian, 1 over f, etc.) and distribution parameters (mean, 
+standard deviation, etc.). The spice-daemon instance then generates a symbol file for a noise source that 
+references a separate library sub-circuit for each noise instance. The sub-circuits for each noise source 
+instance references a separate PWL file. Each PWL file has (time, value) pairs generated in python using
+numpy. As a result, we know that the noise inputs to LTspice actually follow a certain distribution, and we
+can verify that the correct noise distribution is being simulated inside LTspice.
+
+This method also allows us to easily have multiple non-correlated noise sources, as well as noise 
+distributions that aren't pseudo-gaussian or pseudo-uniform. The scaling and math required to generate
+LTspice native gaussian noise for multiple sources was unfeasible in terms of simulation time as well
+as calculating seed values off of the simulation time to gaurantee there was no time correlation between
+the sources.
+
 
 \subsection{Arbitrary S$_{xy}$ models}
 
