@@ -17,7 +17,7 @@
 \usepackage{mathtools}
 \usepackage{bbold}
 
-\usepackage{todonotes}
+\usepackage[textsize=tiny]{todonotes}
 \usepackage{longtable}
 
 \usepackage[sorting=none]{biblatex}
@@ -104,17 +104,53 @@
 
 \section{Introduction}
 
+The non-linearity exhibited by superconducting nanowires is of key importance to many of its applications,
+from superconducting nanowire single-photon detectors (SNSPDs) to neuromorphic computing. This non-linearity
+however is also the reason simulating nanowires is an increasingly hard problem, especially when we start
+to care about the microwave properties of these devices. A common way of simulating these nanowire electronics
+builds on top of existing circuit simulation environments that were optimized for classical electronics -- where
+the microwave and superconducting properties of the models did not matter. 
+
+Simulating the predominant effects in our superconducting electronics is an important step in designing
+superconducting devices.
+
+While the requirement for better nanowire simulations and the complexity of our models are steadily increasing,
+the tools used to simulate
+
+Sending pulses is cool
+
 \subsection{Non-linearity in superconducting nanowires}
 
-Inductance
+Superconducting nanowires are highly non-linear and present three main forms of non-linearity:
+kinetic inductance, state transitions between the normal and superconducting state and
+coupling to other non-linear dynamics.
 
-Switching
+Kinetic inductance is a continuous form of non-linearity introduced by the intertia of cooper
+pairs in a nanowire. In thin films, kinetic inductance is highly dependent on the film thickness,
+temperature, and magnetic field \cite{dizhu-thesis}. In nanowires, the effect of a bias current
+on the kinetic inductance is a well-studied phenomenon. Of particular interest to more complicated
+electronics and SNSPDs is the ability to simulating the effects of pulses and non-DC current behaviour
+on the kinetic inductance. This is an important effect since the non-linearity of some nanowire 
+geometry can change the shapes of pulses travelling in the nanowire. This causes even simple designs 
+such as a superconducting transmission line operating only in the superconducting regime to 
+behave in a hard to predict non-linear fashion. 
+
+The second form of non-linearity pertains to the superconducting state. By assuming the device is
+experiencing a constant magnetic field and temperature, we can find a threshold critical current,
+$i_c$, where if the current exceeds that value locally along a nanowire, it switches out of the 
+superconducting state and into the resistive state. This switching behaviour is a non-linearity
+over a boolean state that is dependent on the current flowing through each portion of the nanowire.
+Non-linearities over a boolean state are particularly hard to simulate as they involve sudden large
+magnitude changes. Typical non-linear solvers are optimized for continuous non-linear systems where
+the solver enters a loop making the timestep smaller until the magnitude of change is small.
+In boolean states, there is no sense of continuity, and in the limit of smaller timesteps, the 
+change in response magnitude will be just as large. 
 
 \subsection{Nanowire Elements}
 
 \subsubsection{SNSPDs}
 
-\subsubsection{SNSPIs}
+% \subsubsection{SNSPIs}
 
 \subsubsection{Tapers}
 
@@ -131,10 +167,9 @@ Switching
 \subsection{SPICE}
 
 One popular way of simulating electronics is using SPICE 
-(Simulation Program with Integrated Circuit Emphasis) first developed
-at University of California, Berkley in the early 70s. 
-SPICE solvers are particularly useful as they combine DC analysis (also known as
-operating point analysis), AC analysis (linear small-signal frequency domain analysis) and 
+(Simulation Program with Integrated Circuit Emphasis). 
+SPICE solvers are an industry standard method of simulation that combines DC analysis (also known as
+operating point analysis), AC analysis (linear small-signal frequency domain analysis), and 
 transient analysis (time-domain large-signal solution of nonlinear differential algebraic equations)
 among other analysis methods.\\
 
@@ -149,11 +184,11 @@ superconducting electronics exist \todo{nanowire, hTron, nTron...}.
 Interfacing with SPICE software involves generating a netlist --- a code snippet that defines
 how the different circuit elements are connected to each other. Netlists have a \ccf{.net} (and 
 sometimes a \ccf{.cir}) extension and can be used across different SPICE implementations. 
-Netlists are encoded as ascii files and as such editing them is straightforward.\\
+Netlists are encoded as ASCII files and as such editing them is straightforward.\\
 
 The netlist's syntax \todo{should i do this?}\\
 
-Some commercial version of SPICE
+Some commercial versions of SPICE
 software, such as LTspice, add Schematic Capture capability. Schematic Capture allows for a
 native GUI encoding of a circuit to be converted into a netlist (in LTspice, that is a 
 schematic file with the extension \ccf{.asc}).\\
@@ -162,15 +197,15 @@ schematic file with the extension \ccf{.asc}).\\
 
 \subsubsection{Models}
 
-ASY + lib
+\todo[inline]{ASY + lib}
 
-Saving Location
+\todo[inline]{Saving Location}
 
 \subsubsection{Dependent Sources}
 
 \subsubsection{Transient Simulation}
 
-Problem/Why?
+\todo[inline]{Problem/Why?
 
 Hard to simulate effects
 
@@ -180,32 +215,32 @@ Complicated analysis toolkits
 
 Noise/custom inputs
 
-Device level modelling
+Device level modeling
 
 Solution/What?
 
-Wrapper for spice solvers like LTspice.
+Wrapper for spice solvers like LTspice.}
 
 
 
 \subsection{QNN SPICE}
 
-In a collaborative setup where SPICE models might be edited (either continuously or infrequent small fixes,) 
+In a collaborative setup where SPICE models might be edited (either continuously or with infrequent small fixes,) 
 having the ability to track the version of the models is important. One solution is to include a version 
-string that the editor updates between revisions. Doing so however doesn't handle merge conflicts natively and
-doesn't track file differences. From these requirements, the widely used version tracking software git can be
+string that the editor updates between revisions. Doing so however, does not handle merge conflicts natively and
+does not track file differences. From these requirements, the widely used version tracking software git can be
 used to track the file differences and users need to always re-download the latest version of the model.
 
 Ideally, every time a model file is downloaded, it gets placed in LTspice's library folder that contains all the base 
-models. This process needs to be repeated for each model and it becomes tedious. The other alternative is have
+models. This process needs to be repeated for each model and it becomes tedious. The other alternative is to have
 the models all live in the same directory as your circuits and each model you use be downloaded manually into
-that directory. The side-effect is you don't need to update all the models every time, however, the directory becomes
-cluttered quickly and you will need multiple copies of every model on your system.
+that directory. The side-effect is you do not need to update all the models every time, however, the directory becomes
+cluttered quickly and you will need multiple copies of every model on your system.\todo{you}
 
 This is where qnn-spice comes in, MIT's Quantum Nanostructures and Nanofabrication group (QNN) has multiple
 repositories, each with multiple spice models. By having a single repository track every repository containing
 SPICE models, a single repository could track all the changes across every model produced by the QNN group. 
-This single repository method takes advantage of git submodules, which tracks the head of each sub-repository.
+This single repository method takes advantage of git submodules, which track the head of each sub-repository.
 A helper update script pulls every submodule and creates symbolic links in LTspice's library folder to each model.
 The model library and symbol files to be included are specified in a YAML file -- a human-readable data-
 serialization language.
@@ -222,15 +257,17 @@ The YAML file maps the path of each file to include in the repositories to a des
 
 \todo[inline]{Include library location?}
 
+\todo[inline]{Setting up a simulation, how is tran command and stepping handled}
+
 \subsection{Updating models using spice-daemon}
 
-The main input for spice-daemon is a YAML file that defines simulation parameters, spice-daemon models and
+The main input for spice-daemon is a YAML file that defines simulation parameters, spice-daemon models, and
 toolkits. A YAML file can also be version tracked, allowing all parameterizations to be known by the host
 python script.\todo[]{cool because u can save runs behind hidden menus and monte carlo things}
 
-LTspice generates multiple files during every run, including a log file, a netlist file, an optional 
-operating point analysis raw binary file and a raw binary file that includes the code of the simulation 
-that is run. spice-daemon tracks the edit history of the log file, a YAML specification file and the 
+LTspice generates multiple files during every run, including: a log file, a netlist file, an optional 
+operating point analysis raw binary file, and a raw binary file that includes the code of the simulation 
+that is run. spice-daemon tracks the edit history of the log file, a YAML specification file, and the 
 circuit schematic using the \cf{WatchDog} object.
 
 Every \cf{Simulation} object defines a couple of important \cf{File} objects that are always present regardless
@@ -256,43 +293,52 @@ the component library file needs to be regenerated to reflect the change in the 
 \subsection{Dynamic Models}
 
 LTspice components are parametrizable using a constant global parameter space that can be used when
-math expressions are being evaluated (such as the output voltage of a behavioural source or the inductance 
+math expressions are being evaluated (such as the output voltage of a behavioral source or the inductance 
 of an inductor). spice-daemon adds the ability to parameterize components beyond expressions by granting the
 ability to edit a PWL file and the netlist of the model between runs.
 \todo[]{note on all libs being merged into one!}
 
 \subsubsection{Lumped Element Transmission Lines and Tapers}
 
-One type of dynamic model that is incorporated into spice-daemon are lumped 
+One type of dynamic model that is incorporated into spice-daemon is lumped 
 element transmission lines. Instead of using LTspice's built-in transmission
 line models (either the Lossless Transmission Lines (T elements) or the 
 Lossy Transmission Lines (O elements)), spice-daemon allows you to specify a
-lumped-element version. 
+variable discretization length lumped-element version. 
 
 The Lossless Transmission Line model has a bunch of limitations: it models only one propagation mode,
- doesn't support non-linear response functions and doesn't 
-model the DC behaviour correctly. The Lossy Transmission Line also suffers from multiple caveats,
-it doesn't support frequency dependence for loss and it also doesn't support non-linear response 
+ does not support non-linear response functions, and does not 
+model the DC behavior correctly. The Lossy Transmission Line also suffers from multiple caveats,
+it does not support frequency dependence for loss and it also does not support non-linear response 
 functions. %https://ltwiki.org/index.php?title=O-device_(Lossy_Transmission_Line)_and_T-device_(Lossless_Transmission_Line)_modelling_issues https://ltwiki.org/files/LTspiceHelp.chm.html
 
-For well-defined behaviour with non-convolution based models, it is helpful to be able to run
+For well-defined behavior with non-convolution based models, it is helpful to be able to run
 a lumped element model from within LTspice. However, this would involve laying down thousands 
 of repeating chunks of elements manually. One use of dynamic models is generating a model 
 that encodes variable length logic. In this method of programming a lumped element transmission
-line, by changing one parameter in the configuration file, we are able to affect the circuit
-topology and add a large number of elements - this type of automation is not possible without
-some sort of external daemon.
+line, the circuit topology can be affected by a single parameter in the configuration file 
+(in this case number of nodes). This type of automation is not possible using LTspice's built-in
+parameterization.
 
-One extension to this one-to-many mapping for the transmission line is our ability to program
-lumped-element tapers in. The transmission line models in LTspice work for lines with constant 
-parameters (impedance, propagation velocity, loss etc.). With a lumped element model that is fully
+This method of simulating a transmission line not only solves the issues introduced by the
+T and O models, but also give us the ability to simulate more complicated transmission lines.
+For instance, inductors on a transmission line can be non-linear, making simulating a superconducting
+transmission line more accurate. Other possibilities that aren't possible in the LTspcie environment
+are adding custom elements instead of a repeating sequence of inductors and capacitors allowing us to
+model JTWPAs of variable length easily.
+
+Another extension to this one-to-many mapping for the transmission line can be extended to model
+lumped-element tapers. The transmission line models in LTspice work for lines with constant 
+parameters (impedance, propagation velocity, loss, etc.). With a lumped element model that is fully
 controlled by spice-daemon, changing the impedance of one port can map the inductance and capacitance
 of each finite element to a pair of values based on the taper geometry chosen. This adds another layer
-of abstraction where we can define an impedance matched transmission line with a klopfenstein geometry
+of abstraction where we can define an impedance-matched transmission line with a Klopfenstein geometry
 between two impedances $Z_{in}, Z_{out}$. If we change $Z_{in}$, the spice-daemon instance calculates
 new tapering parameters smoothly perturbing the impedance of the line from $Z_{in}$ to $Z_{out}$ and
 updates the library file for the taper element. When LTspice runs a new simulation, it pulls the latest
-lib file with the new impedance matched taper.
+lib file with the new impedance-matched taper. This non-uniform version of the transmission line
+is included as a separate taper model in spice-daemon that has additional logic pertaining to 
+impedance-matching geometries.
 
 \subsubsection{Generating Noise}
 
@@ -304,60 +350,130 @@ small-signal AC simulation). In this mode, we can use a voltage source with an L
 to generate noise such as \cf{noise}, \cf{random}, \cf{gaussian}, \cf{white}. However, these noise commands
 generate noise that is correlated amongst instances and is not gaussian in nature. One workaround that was
 discovered by the LTspice community was using 4 voltage sources each producing a shifted seed value for 
-gaussian noise that guarantees that the seed doesn't overlap with the simulation time. By concatenating the
-outputs of the behavioural voltage sources, the central limit theorem makes the noise distribution behave more 
+gaussian noise that guarantees that the seed does not overlap with the simulation time. By concatenating the
+outputs of the behavioral voltage sources, the central limit theorem makes the noise distribution behave more 
 gaussian. Note that the number 4 was picked due to a trade-off between the complexity of generating and simulating
 that noise and how gaussian it is -- the more sources there are, the more gaussian the noise distribution is.
 
 One other workaround is to use PWL files. PWL files allow you to input piece-wise linear functions into LTspice
-sources that are not necessarily behavioural. The PWL opeartion mode maps (time, value) pairs to a continuous 
+sources that are not necessarily behavioral. The PWL operation mode maps (time, value) pairs to a continuous 
 output value based on the simulation time. However, if a simulation has $N$ points it is solved at and you 
 provide $N$ noise points, then there is no extrapolation that occurs, provided these points are chosen at random 
 from a gaussian distribution, then the voltage source will generate noise that has a gaussian probability density
-function. The process of re-creating this noise file and making sure there is enough data points and that the time
-axes of the simulation and the noise data is matched is tedious.
+function. The process of re-creating this noise file, ensuring there are enough data points as timesteps in the 
+simulation and that the noise data follows a certain distribution is tedious.
 
 To solve this issue, spice-daemon can handle the creation of noise sources and their accompanying PWL files,
 abstracting them behind one symbol file. The user defines a noise source type (voltage or current), the 
-noise distribution it should follow (poisson, gaussian, 1 over f, etc.) and distribution parameters (mean, 
+noise distribution it should follow (Poisson, Gaussian, $1/f$, etc.) and distribution parameters (mean, 
 standard deviation, etc.). The spice-daemon instance then generates a symbol file for a noise source that 
-references a separate library sub-circuit for each noise instance. The sub-circuits for each noise source 
-instance references a separate PWL file. Each PWL file has (time, value) pairs generated in python using
-numpy. As a result, we know that the noise inputs to LTspice actually follow a certain distribution, and we
+references a separate library sub-circuit for each noise instance. Each sub-circuit references a 
+separate PWL file that encodes a list of (time, value) pairs generated in Python using
+\cf{NumPy}. As a result, we know that the noise inputs to LTspice actually follow a specific distribution, and we
 can verify that the correct noise distribution is being simulated inside LTspice.
 
 This method also allows us to easily have multiple non-correlated noise sources, as well as noise 
-distributions that aren't pseudo-gaussian or pseudo-uniform. The scaling and math required to generate
+distributions that are not pseudo-gaussian or pseudo-uniform. The scaling and math required to generate
 LTspice native gaussian noise for multiple sources was unfeasible in terms of simulation time as well
-as calculating seed values off of the simulation time to gaurantee there was no time correlation between
+as calculating seed values off of the simulation time to guarantee there was no time correlation between
 the sources.
 
+\todo[inline]{section on how to design model}
 
 \subsection{Arbitrary S$_{xy}$ models}
 
-Diagram of 2port and n-port Sxy networks
+\todo[inline]{Diagram of 2port and n-port Sxy networks
 
-Inductor, Cap model for T.D.
+Inductor, Cap model for T.D.}
 
 \subsubsection{2-port model}
 
-E.g. Tapers!
+\todo[inline]{E.g. Tapers!}
 
 \subsubsection{n-port model}
 
-E.g. Bias Tee
+\todo[inline]{E.g. Bias Tee}
 
-\subsection{Postprocessing/Toolkits}
+\subsection{Post-processing using spice-daemon Toolkits}
+
+While\todo[]{rework first sentence} LTspice transient simulations are sufficient to characterize the time behavior of a superconducting 
+circuit, being able to post-process the data in a meaningful way to produce familiar plots to the ones
+seen in a lab setting is also essential to a good simulation environment. 
+The data generated by a SPICE simulation is a raw file
+that contains the node voltages as a function of time, however, we might care about things that are functions
+of bias currents, functions of temperature, noise statistics, and other factors where time is not the
+independent variable. One example of a widely used metric for SNSPDs is a PCR curve (Photon Count Rate), where
+the y-axis is the count rate (how many hotspots form on the SNSPD) and the x-axis is the bias current.
+
+Creating a PCR curve requires creating a plot where the x-axis is the bias current used for multiple
+periods of simulation time. The y-axis would contain the sum of spikes that the SNSPD has over each period
+of time. This sort of rate measurement cannot be performed in LTspice without a complicated secondary circuit
+that is not feasible. Using a separate circuit within the simulation is also detrimental to the simulation
+performance as it can introduce a non-linear coupling between the counting circuit and the nanowire circuit.
+This coupling can cause the SPICE solver to take more steps near counts and cause the nanowire model to
+misbehave\todo[]{how to say more on that in Model Stability section?}.
+
+By hooking a post-processing function to the \cf{WatchDog} class, spice-daemon can produce a plot
+using that function at the end of each simulation. Using \cf{PyLTSpice}'s \cf{LTSpiceRawRead}
+function, the contents of LTspice's RAW output file can be dumped into a Python object. This object
+separates out each individual trace (voltage at a node, current through a component, time, etc.)
+from each simulation run (produced by the \cf{.step} SPICE directive) as separate waves. The 
+post-processor can then perform any kind of analysis needed from one or multiple simulations
+just as you would if you exported the simulation data from LTspice and post-processed it in
+\cf{NumPy}. spice-daemon can then update the plot automatically after each simulation run is completed.
+
+Packages like \cf{PyLTSpice}\todo[]{topic sentence doesn't match paragraph} can be used to manually 
+run a script, however, spice-daemon
+provides the ability to generate the plots after each simulation invocation automatically.
+It also gives a standard way of building post-processing blocks that are directly related
+and parametrized by the circuit schematic. Since spice-daemon has access to the global
+variables used in the SPICE simulation, it can also use them in its computation.
+Some toolkits can also be made to be component specific. By instantiating a PCR object
+for instance, spice-daemon automatically infers that the nanowire circuit is of interest
+for this object and allows for more compact toolkit specifications.
+
+\subsubsection{IV curves}
+
+\todo[inline]{why it matters (pseudo DC in LTspice weird)}
+
+\subsubsection{Power Spectral Density}
+
+One use case for spice-daemon toolkits beyond superconducting electronics is using it to generate
+Power Spectral Density (PSD) plots. The Power Spectral Density of a signal encodes the power per
+unit of frequency of the signal as a function of the frequency. 
+
+\todo[inline]{what is it and why is it important?} 
+
+LTspice cannot generate a PSD plot natively and there is probably no way of doing it in a SPICE
+environment without any kind of post-processing or additional features not inside LTspice.
+Note that LTspice allows users to plot the Fast Fourier transform (FFT) of a signal but not the 
+PSD. spice-daemon handles that by taking the FFT in Python and plotting it either in Python's 
+plotting package \cf{matplotlib} or by injecting a new node into the RAW output. The default method is
+using the \cf{matplotlib} package as the LTspice plotter is not as customizable and does not allow for
+a different x-axis.
+
+\todo[inline]{example of a PSD to replicate noise input}
 
 \section{Model Stability}
 
-\subsection{Stability in F.D.M.}
+\subsection{Stability}
 
-\subsubsection{Stabiltiy in LTSpice}
+\todo[inline]{Stability in FDM and LTspice}
+
+\subsubsection{Stability of the Nanowire Model}
+
+Boolean state non-linearities are integral to optimizing and training Neural Networks, and as a 
+result are a well studied concept. A common way of solving this issue is smoothening out the 
+change by modeling the boolean state as a continuous state transition with a smooth interpolating
+function, such as a sigmoid function. In nanowires, we particularly care about smoothness of state
+transition over time while the transition dependence is on current (which is also a function of time).
+Macroscopically, this state transition involves a chain reaction and can be \todo[inline]{resistor growth exponential/gaussian}
+
+First form of continuous nonlinearity studied in (J)TWPAs.
 
 \subsection{Malicious Circuits}
 
-Why? How? (tline timestepping with half res?)
+\todo[inline]{Why? How? (tline timestepping with half res?)}
 
 \subsubsection{Proof of Equivalence to Stability}
 
@@ -365,7 +481,7 @@ Why? How? (tline timestepping with half res?)
 
 \subsubsection{Current nanowire model}
 
-Layout of in-depth model
+\todo[inline]{Layout of in-depth model}
 
 \subsubsection{S.A. of current nanowire model}
 
@@ -377,7 +493,7 @@ Layout of in-depth model
 
 \section{Efficient Simulation}
 
-Julia simulator
+\todo[inline]{Julia simulator}
 
 \subsection{Tline Model}
 
