@@ -1,2 +1,5 @@
 .olauth
 .DS_Store
+
+# all the raw files in the snspi dir are gb in size lol...
+snspi/*.raw
