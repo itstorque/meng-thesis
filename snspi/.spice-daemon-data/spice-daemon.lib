@@ -1,0 +1,411 @@
+.subckt my_snspi N0 OUT
+** snspi **
+XU0 0 0 N0 N1 nanowireDynamic
+.lib snspd.lib
+C0 N0 0 8e-09
+XU1 0 0 N1 N2 nanowireDynamic
+C1 N1 0 8e-09
+XU2 0 0 N2 N3 nanowireDynamic
+C2 N2 0 8e-09
+XU3 0 0 N3 N4 nanowireDynamic
+C3 N3 0 8e-09
+XU4 0 0 N4 N5 nanowireDynamic
+C4 N4 0 8e-09
+XU5 0 0 N5 N6 nanowireDynamic
+C5 N5 0 8e-09
+XU6 0 0 N6 N7 nanowireDynamic
+C6 N6 0 8e-09
+XU7 0 0 N7 N8 nanowireDynamic
+C7 N7 0 8e-09
+XU8 0 0 N8 N9 nanowireDynamic
+C8 N8 0 8e-09
+XU9 0 0 N9 N10 nanowireDynamic
+C9 N9 0 8e-09
+XU10 0 0 N10 N11 nanowireDynamic
+C10 N10 0 8e-09
+XU11 0 0 N11 N12 nanowireDynamic
+C11 N11 0 8e-09
+XU12 0 0 N12 N13 nanowireDynamic
+C12 N12 0 8e-09
+XU13 0 0 N13 N14 nanowireDynamic
+C13 N13 0 8e-09
+XU14 0 0 N14 N15 nanowireDynamic
+C14 N14 0 8e-09
+XU15 0 0 N15 N16 nanowireDynamic
+C15 N15 0 8e-09
+XU16 0 0 N16 N17 nanowireDynamic
+C16 N16 0 8e-09
+XU17 0 0 N17 N18 nanowireDynamic
+C17 N17 0 8e-09
+XU18 0 0 N18 N19 nanowireDynamic
+C18 N18 0 8e-09
+XU19 0 0 N19 N20 nanowireDynamic
+C19 N19 0 8e-09
+XU20 0 0 N20 N21 nanowireDynamic
+C20 N20 0 8e-09
+XU21 0 0 N21 N22 nanowireDynamic
+C21 N21 0 8e-09
+XU22 0 0 N22 N23 nanowireDynamic
+C22 N22 0 8e-09
+XU23 0 0 N23 N24 nanowireDynamic
+C23 N23 0 8e-09
+XU24 0 0 N24 N25 nanowireDynamic
+C24 N24 0 8e-09
+XU25 0 0 N25 N26 nanowireDynamic
+C25 N25 0 8e-09
+XU26 0 0 N26 N27 nanowireDynamic
+C26 N26 0 8e-09
+XU27 0 0 N27 N28 nanowireDynamic
+C27 N27 0 8e-09
+XU28 0 0 N28 N29 nanowireDynamic
+C28 N28 0 8e-09
+XU29 0 0 N29 N30 nanowireDynamic
+C29 N29 0 8e-09
+XU30 0 0 N30 N31 nanowireDynamic
+C30 N30 0 8e-09
+XU31 0 0 N31 N32 nanowireDynamic
+C31 N31 0 8e-09
+XU32 0 0 N32 N33 nanowireDynamic
+C32 N32 0 8e-09
+XU33 0 0 N33 N34 nanowireDynamic
+C33 N33 0 8e-09
+XU34 0 0 N34 N35 nanowireDynamic
+C34 N34 0 8e-09
+XU35 0 0 N35 N36 nanowireDynamic
+C35 N35 0 8e-09
+XU36 0 0 N36 N37 nanowireDynamic
+C36 N36 0 8e-09
+XU37 0 0 N37 N38 nanowireDynamic
+C37 N37 0 8e-09
+XU38 0 0 N38 N39 nanowireDynamic
+C38 N38 0 8e-09
+XU39 0 0 N39 N40 nanowireDynamic
+C39 N39 0 8e-09
+XU40 0 0 N40 N41 nanowireDynamic
+C40 N40 0 8e-09
+XU41 0 0 N41 N42 nanowireDynamic
+C41 N41 0 8e-09
+XU42 0 0 N42 N43 nanowireDynamic
+C42 N42 0 8e-09
+XU43 0 0 N43 N44 nanowireDynamic
+C43 N43 0 8e-09
+XU44 0 0 N44 N45 nanowireDynamic
+C44 N44 0 8e-09
+XU45 0 0 N45 N46 nanowireDynamic
+C45 N45 0 8e-09
+XU46 0 0 N46 N47 nanowireDynamic
+C46 N46 0 8e-09
+XU47 0 0 N47 N48 nanowireDynamic
+C47 N47 0 8e-09
+XU48 0 0 N48 N49 nanowireDynamic
+C48 N48 0 8e-09
+XU49 0 0 N49 N50 nanowireDynamic
+C49 N49 0 8e-09
+XU50 0 0 N50 N51 nanowireDynamic
+C50 N50 0 8e-09
+XU51 0 0 N51 N52 nanowireDynamic
+C51 N51 0 8e-09
+XU52 0 0 N52 N53 nanowireDynamic
+C52 N52 0 8e-09
+XU53 0 0 N53 N54 nanowireDynamic
+C53 N53 0 8e-09
+XU54 0 0 N54 N55 nanowireDynamic
+C54 N54 0 8e-09
+XU55 0 0 N55 N56 nanowireDynamic
+C55 N55 0 8e-09
+XU56 0 0 N56 N57 nanowireDynamic
+C56 N56 0 8e-09
+XU57 0 0 N57 N58 nanowireDynamic
+C57 N57 0 8e-09
+XU58 0 0 N58 N59 nanowireDynamic
+C58 N58 0 8e-09
+XU59 0 0 N59 N60 nanowireDynamic
+C59 N59 0 8e-09
+XU60 0 0 N60 N61 nanowireDynamic
+C60 N60 0 8e-09
+XU61 0 0 N61 N62 nanowireDynamic
+C61 N61 0 8e-09
+XU62 0 0 N62 N63 nanowireDynamic
+C62 N62 0 8e-09
+XU63 0 0 N63 N64 nanowireDynamic
+C63 N63 0 8e-09
+XU64 0 0 N64 N65 nanowireDynamic
+C64 N64 0 8e-09
+XU65 0 0 N65 N66 nanowireDynamic
+C65 N65 0 8e-09
+XU66 0 0 N66 N67 nanowireDynamic
+C66 N66 0 8e-09
+XU67 0 0 N67 N68 nanowireDynamic
+C67 N67 0 8e-09
+XU68 0 0 N68 N69 nanowireDynamic
+C68 N68 0 8e-09
+XU69 0 0 N69 N70 nanowireDynamic
+C69 N69 0 8e-09
+XU70 0 0 N70 N71 nanowireDynamic
+C70 N70 0 8e-09
+XU71 0 0 N71 N72 nanowireDynamic
+C71 N71 0 8e-09
+XU72 0 0 N72 N73 nanowireDynamic
+C72 N72 0 8e-09
+XU73 0 0 N73 N74 nanowireDynamic
+C73 N73 0 8e-09
+XU74 0 0 N74 N75 nanowireDynamic
+C74 N74 0 8e-09
+XU75 0 0 N75 N76 nanowireDynamic
+C75 N75 0 8e-09
+XU76 0 0 N76 N77 nanowireDynamic
+C76 N76 0 8e-09
+XU77 0 0 N77 N78 nanowireDynamic
+C77 N77 0 8e-09
+XU78 0 0 N78 N79 nanowireDynamic
+C78 N78 0 8e-09
+XU79 0 0 N79 N80 nanowireDynamic
+C79 N79 0 8e-09
+XU80 0 0 N80 N81 nanowireDynamic
+C80 N80 0 8e-09
+XU81 0 0 N81 N82 nanowireDynamic
+C81 N81 0 8e-09
+XU82 0 0 N82 N83 nanowireDynamic
+C82 N82 0 8e-09
+XU83 0 0 N83 N84 nanowireDynamic
+C83 N83 0 8e-09
+XU84 0 0 N84 N85 nanowireDynamic
+C84 N84 0 8e-09
+XU85 0 0 N85 N86 nanowireDynamic
+C85 N85 0 8e-09
+XU86 0 0 N86 N87 nanowireDynamic
+C86 N86 0 8e-09
+XU87 0 0 N87 N88 nanowireDynamic
+C87 N87 0 8e-09
+XU88 0 0 N88 N89 nanowireDynamic
+C88 N88 0 8e-09
+XU89 0 0 N89 N90 nanowireDynamic
+C89 N89 0 8e-09
+XU90 0 0 N90 N91 nanowireDynamic
+C90 N90 0 8e-09
+XU91 0 0 N91 N92 nanowireDynamic
+C91 N91 0 8e-09
+XU92 0 0 N92 N93 nanowireDynamic
+C92 N92 0 8e-09
+XU93 0 0 N93 N94 nanowireDynamic
+C93 N93 0 8e-09
+XU94 0 0 N94 N95 nanowireDynamic
+C94 N94 0 8e-09
+XU95 0 0 N95 N96 nanowireDynamic
+C95 N95 0 8e-09
+XU96 0 0 N96 N97 nanowireDynamic
+C96 N96 0 8e-09
+XU97 0 0 N97 N98 nanowireDynamic
+C97 N97 0 8e-09
+XU98 0 0 N98 N99 nanowireDynamic
+C98 N98 0 8e-09
+XU99 0 0 N99 N100 nanowireDynamic
+C99 N99 0 8e-09
+iphoton_1_at_100 0 PHOTON100 PULSE(0 1u 1e-08 1p 1p 1p)
+XU100 PHOTON100 0 N100 N101 nanowireDynamic
+C100 N100 0 8e-09
+XU101 0 0 N101 N102 nanowireDynamic
+C101 N101 0 8e-09
+XU102 0 0 N102 N103 nanowireDynamic
+C102 N102 0 8e-09
+XU103 0 0 N103 N104 nanowireDynamic
+C103 N103 0 8e-09
+XU104 0 0 N104 N105 nanowireDynamic
+C104 N104 0 8e-09
+XU105 0 0 N105 N106 nanowireDynamic
+C105 N105 0 8e-09
+XU106 0 0 N106 N107 nanowireDynamic
+C106 N106 0 8e-09
+XU107 0 0 N107 N108 nanowireDynamic
+C107 N107 0 8e-09
+XU108 0 0 N108 N109 nanowireDynamic
+C108 N108 0 8e-09
+XU109 0 0 N109 N110 nanowireDynamic
+C109 N109 0 8e-09
+XU110 0 0 N110 N111 nanowireDynamic
+C110 N110 0 8e-09
+XU111 0 0 N111 N112 nanowireDynamic
+C111 N111 0 8e-09
+XU112 0 0 N112 N113 nanowireDynamic
+C112 N112 0 8e-09
+XU113 0 0 N113 N114 nanowireDynamic
+C113 N113 0 8e-09
+XU114 0 0 N114 N115 nanowireDynamic
+C114 N114 0 8e-09
+XU115 0 0 N115 N116 nanowireDynamic
+C115 N115 0 8e-09
+XU116 0 0 N116 N117 nanowireDynamic
+C116 N116 0 8e-09
+XU117 0 0 N117 N118 nanowireDynamic
+C117 N117 0 8e-09
+XU118 0 0 N118 N119 nanowireDynamic
+C118 N118 0 8e-09
+XU119 0 0 N119 N120 nanowireDynamic
+C119 N119 0 8e-09
+XU120 0 0 N120 N121 nanowireDynamic
+C120 N120 0 8e-09
+XU121 0 0 N121 N122 nanowireDynamic
+C121 N121 0 8e-09
+XU122 0 0 N122 N123 nanowireDynamic
+C122 N122 0 8e-09
+XU123 0 0 N123 N124 nanowireDynamic
+C123 N123 0 8e-09
+XU124 0 0 N124 N125 nanowireDynamic
+C124 N124 0 8e-09
+XU125 0 0 N125 N126 nanowireDynamic
+C125 N125 0 8e-09
+XU126 0 0 N126 N127 nanowireDynamic
+C126 N126 0 8e-09
+XU127 0 0 N127 N128 nanowireDynamic
+C127 N127 0 8e-09
+XU128 0 0 N128 N129 nanowireDynamic
+C128 N128 0 8e-09
+XU129 0 0 N129 N130 nanowireDynamic
+C129 N129 0 8e-09
+XU130 0 0 N130 N131 nanowireDynamic
+C130 N130 0 8e-09
+XU131 0 0 N131 N132 nanowireDynamic
+C131 N131 0 8e-09
+XU132 0 0 N132 N133 nanowireDynamic
+C132 N132 0 8e-09
+XU133 0 0 N133 N134 nanowireDynamic
+C133 N133 0 8e-09
+XU134 0 0 N134 N135 nanowireDynamic
+C134 N134 0 8e-09
+XU135 0 0 N135 N136 nanowireDynamic
+C135 N135 0 8e-09
+XU136 0 0 N136 N137 nanowireDynamic
+C136 N136 0 8e-09
+XU137 0 0 N137 N138 nanowireDynamic
+C137 N137 0 8e-09
+XU138 0 0 N138 N139 nanowireDynamic
+C138 N138 0 8e-09
+XU139 0 0 N139 N140 nanowireDynamic
+C139 N139 0 8e-09
+XU140 0 0 N140 N141 nanowireDynamic
+C140 N140 0 8e-09
+XU141 0 0 N141 N142 nanowireDynamic
+C141 N141 0 8e-09
+XU142 0 0 N142 N143 nanowireDynamic
+C142 N142 0 8e-09
+XU143 0 0 N143 N144 nanowireDynamic
+C143 N143 0 8e-09
+XU144 0 0 N144 N145 nanowireDynamic
+C144 N144 0 8e-09
+XU145 0 0 N145 N146 nanowireDynamic
+C145 N145 0 8e-09
+XU146 0 0 N146 N147 nanowireDynamic
+C146 N146 0 8e-09
+XU147 0 0 N147 N148 nanowireDynamic
+C147 N147 0 8e-09
+XU148 0 0 N148 N149 nanowireDynamic
+C148 N148 0 8e-09
+XU149 0 0 N149 N150 nanowireDynamic
+C149 N149 0 8e-09
+XU150 0 0 N150 N151 nanowireDynamic
+C150 N150 0 8e-09
+XU151 0 0 N151 N152 nanowireDynamic
+C151 N151 0 8e-09
+XU152 0 0 N152 N153 nanowireDynamic
+C152 N152 0 8e-09
+XU153 0 0 N153 N154 nanowireDynamic
+C153 N153 0 8e-09
+XU154 0 0 N154 N155 nanowireDynamic
+C154 N154 0 8e-09
+XU155 0 0 N155 N156 nanowireDynamic
+C155 N155 0 8e-09
+XU156 0 0 N156 N157 nanowireDynamic
+C156 N156 0 8e-09
+XU157 0 0 N157 N158 nanowireDynamic
+C157 N157 0 8e-09
+XU158 0 0 N158 N159 nanowireDynamic
+C158 N158 0 8e-09
+XU159 0 0 N159 N160 nanowireDynamic
+C159 N159 0 8e-09
+XU160 0 0 N160 N161 nanowireDynamic
+C160 N160 0 8e-09
+XU161 0 0 N161 N162 nanowireDynamic
+C161 N161 0 8e-09
+XU162 0 0 N162 N163 nanowireDynamic
+C162 N162 0 8e-09
+XU163 0 0 N163 N164 nanowireDynamic
+C163 N163 0 8e-09
+XU164 0 0 N164 N165 nanowireDynamic
+C164 N164 0 8e-09
+XU165 0 0 N165 N166 nanowireDynamic
+C165 N165 0 8e-09
+XU166 0 0 N166 N167 nanowireDynamic
+C166 N166 0 8e-09
+XU167 0 0 N167 N168 nanowireDynamic
+C167 N167 0 8e-09
+XU168 0 0 N168 N169 nanowireDynamic
+C168 N168 0 8e-09
+XU169 0 0 N169 N170 nanowireDynamic
+C169 N169 0 8e-09
+XU170 0 0 N170 N171 nanowireDynamic
+C170 N170 0 8e-09
+XU171 0 0 N171 N172 nanowireDynamic
+C171 N171 0 8e-09
+XU172 0 0 N172 N173 nanowireDynamic
+C172 N172 0 8e-09
+XU173 0 0 N173 N174 nanowireDynamic
+C173 N173 0 8e-09
+XU174 0 0 N174 N175 nanowireDynamic
+C174 N174 0 8e-09
+XU175 0 0 N175 N176 nanowireDynamic
+C175 N175 0 8e-09
+XU176 0 0 N176 N177 nanowireDynamic
+C176 N176 0 8e-09
+XU177 0 0 N177 N178 nanowireDynamic
+C177 N177 0 8e-09
+XU178 0 0 N178 N179 nanowireDynamic
+C178 N178 0 8e-09
+XU179 0 0 N179 N180 nanowireDynamic
+C179 N179 0 8e-09
+XU180 0 0 N180 N181 nanowireDynamic
+C180 N180 0 8e-09
+XU181 0 0 N181 N182 nanowireDynamic
+C181 N181 0 8e-09
+XU182 0 0 N182 N183 nanowireDynamic
+C182 N182 0 8e-09
+XU183 0 0 N183 N184 nanowireDynamic
+C183 N183 0 8e-09
+XU184 0 0 N184 N185 nanowireDynamic
+C184 N184 0 8e-09
+XU185 0 0 N185 N186 nanowireDynamic
+C185 N185 0 8e-09
+XU186 0 0 N186 N187 nanowireDynamic
+C186 N186 0 8e-09
+XU187 0 0 N187 N188 nanowireDynamic
+C187 N187 0 8e-09
+XU188 0 0 N188 N189 nanowireDynamic
+C188 N188 0 8e-09
+XU189 0 0 N189 N190 nanowireDynamic
+C189 N189 0 8e-09
+XU190 0 0 N190 N191 nanowireDynamic
+C190 N190 0 8e-09
+XU191 0 0 N191 N192 nanowireDynamic
+C191 N191 0 8e-09
+XU192 0 0 N192 N193 nanowireDynamic
+C192 N192 0 8e-09
+XU193 0 0 N193 N194 nanowireDynamic
+C193 N193 0 8e-09
+XU194 0 0 N194 N195 nanowireDynamic
+C194 N194 0 8e-09
+XU195 0 0 N195 N196 nanowireDynamic
+C195 N195 0 8e-09
+XU196 0 0 N196 N197 nanowireDynamic
+C196 N196 0 8e-09
+XU197 0 0 N197 N198 nanowireDynamic
+C197 N197 0 8e-09
+XU198 0 0 N198 N199 nanowireDynamic
+C198 N198 0 8e-09
+XU199 0 0 N199 N200 nanowireDynamic
+C199 N199 0 8e-09
+XU200 0 0 N200 OUT nanowireDynamic
+C200 N200 0 8e-09
+C201 OUT 0 8e-09
+
+
+.ends my_snspi
+
