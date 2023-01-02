@@ -38,8 +38,8 @@ for file in ["fixed_rc_lol.raw", "fixed_exp_taper.raw"]:
         print("F", F)
         S = 0#(V[0]) - (REF[0]/F)
         
-        ax[k].plot(abs(x.get_wave(step))/1e9, V, label="Model", color="royalblue", linewidth="2")
-        ax[k].plot(freq[k]/1e9, 20*np.log10(S22[k]), '--', label="Analytic", color="black", linewidth="1")
+        ax[k].plot(abs(x.get_wave(step))/1e9, V, label="spiced model", color="#8C001A", linewidth="2")
+        ax[k].plot(freq[k]/1e9, 20*np.log10(S22[k]), '--', label="source $S_{22}$", color="#FF9000", linewidth="1.5", dashes=(1, 3))
         # ax[k].plot(abs(x.get_wave(step))/1e12, P*np.pi, color="red")
         # ax[k, 1].plot(abs(x.get_wave(step))/1e9, V2, label="Measured from Model", color="royalblue", linewidth="2")
         # ax[k, 1].plot(freq[k]/1e9, 20*np.log10(S12[k]), '--', label="Analytic", color="black", linewidth="1")
@@ -66,16 +66,19 @@ for file in ["fixed_rc_lol.raw", "fixed_exp_taper.raw"]:
 
         # plt.plot(x.get_wave(step)[:len(a1)], a1-IR1.get_wave(step)[:len(a1)], label="Error " + labels[k])
 
-for ax1, col in zip(ax, ["$S_{22}$ of LC filter", "$S_{22}$ of Exponential Taper"]):
+ax[0].set_xlim((0, 5))
+
+for ax1, col in zip(ax, [("$S_{22}$ of LC filter", "lower right"), ("$S_{22}$ of Exponential Taper", "upper right")]):
+    col, loc = col
     ax1.set_title(col)
-    ax1.legend()
+    ax1.legend(loc=loc)
 
 # for ax1, row in zip(ax[:,0], ["reltol $10^{-3}$", "reltol $10^{-6}$"]):
 #     ax1.annotate(row, xy=(0, 0.5), xytext=(-ax1.yaxis.labelpad - 5, 0),
 #         xycoords=ax1.yaxis.label, textcoords='offset points',
 #         size='large', ha='right', va='center')
 
-plt.tight_layout(pad=1.4, w_pad=0.5, h_pad=1.0)
+plt.tight_layout(pad=0.5, w_pad=0.5, h_pad=0.5)
 
  # order a legend.
 plt.show()
