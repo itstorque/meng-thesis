@@ -68,6 +68,25 @@ for file in ["fixed_rc_lol.raw", "fixed_exp_taper.raw"]:
 
 ax[0].set_xlim((0, 5))
 
+
+LT = LTSpice_RawRead.LTSpiceRawRead("rough_test 2.raw")
+VIN = LT.get_trace("V(IN)")
+VREF = LT.get_trace("V(N002)")
+IIN = LT.get_trace("I(V1)")
+IREF = LT.get_trace("I(R1)")
+VFREQ = LT.get_trace("V(FREQ)")
+x = LT.get_trace(0)  # Zero is always the X axis
+steps = LT.get_steps()
+for step in range(len(steps)):
+    
+    # MAG = np.max(abs(VIN.get_wave(step)*IIN.get_wave(step) - VREF.get_wave(step)*IREF.get_wave(step)))
+    MAG = abs(np.max(abs(VIN.get_wave(step))) - np.max(abs(VREF.get_wave(step))))
+    print(MAG)
+    MAG = 20*np.log(MAG)
+    
+    ax[1].scatter(np.average(VFREQ.get_wave(step))/1e9, MAG, marker="x")
+    
+
 for ax1, col in zip(ax, [("$S_{22}$ of LC filter", "lower right"), ("$S_{22}$ of Exponential Taper", "upper right")]):
     col, loc = col
     ax1.set_title(col)
