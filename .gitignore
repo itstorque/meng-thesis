@@ -4,3 +4,4 @@
 # all the raw files in the snspi and sparam dir are gb in size lol...
 snspi/*.raw
 sparam/*.raw
+*.raw

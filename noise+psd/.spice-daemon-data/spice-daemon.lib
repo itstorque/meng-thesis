@@ -1,0 +1,7 @@
+.subckt gaussian in out
+
+** NOISE SOURCE **
+v out in PWL file=/Users/torque/programs/meng-thesis/noise+psd/.spice-daemon-data/module_gaussian.csv
+
+.ends gaussian
+
