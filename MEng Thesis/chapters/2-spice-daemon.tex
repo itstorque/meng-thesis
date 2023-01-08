@@ -121,8 +121,8 @@ folder.
 The YAML file maps the path of each file to include in the repositories to a destination path in the two
 \cf{qnn-spice} subfolders based on their extension. 
 The destination path allows users to change the grouping of elements agnostic to how the repositories
-were laid out, i.e. you can have two repos group elements together and you can split a
-repo to multiple folders. 
+were laid out, i.e. you can have two repositories have their elements grouped together and you can split one
+repo into multiple folders. 
 % \todoidea{how to make a custom module grouping?}
 
 LTspice updates the underlying library subcircuits for models upon every simulation,
@@ -133,10 +133,10 @@ also applicable to spice-daemon dynamic models in section \ref{sd_models} and \r
 qnn-spice is also capable of merging libs. This means that all the subcircuits can live
 on the remote at all times and running a simulation involves redownloading all the 
 subcircuits and caching them. This can be done using the \cf{.inc} directive that takes
-in the url for the remote lib.
+in the URL for the remote lib.
 Unfortunately, this doesn't work on the Mac's version of LTspice \cf{17.0} (but does on
 Windows and Linux). This feature is useful for continually changing library files in 
-a rapid development environments and for syncing models onto new devices without 
+a rapid development environment and for syncing models onto new devices without 
 any overhead.
 
 % \todoexplain[inline]{Note for updates: lib files automatically updated. Schematic Capture related files (asy) aren't updated.}
@@ -152,13 +152,13 @@ python script.
 
 spice-daemon creates a \cf{Simulation} object for each daemon instance. Each simulation
 object has a list of files, \cf{watch\_files}, that are used to indicate the versioning
-of a simulation. spice-daemon defines a \cf{WatchDog} object who's job is to make sure
+of a simulation. spice-daemon defines a \cf{WatchDog} object whose job is to make sure
 spice-daemon modules and toolkits are up to date if any of these \cf{watch\_files}
 are edited. 
-The \cf{WatchDog} module periodically checks for edits on each of the \cf{watch\_files},
-and runs starts a new thread to regenerate some (or all) of the spice-daemon produced files.
+The \cf{WatchDog} module periodically checks for edits on each of the \cf{watch\_files}
+and starts a new thread to regenerate some (or all) of the spice-daemon-produced files.
 For instance, if someone edits an attribute for a component in the YAML specification file, 
-the component library file needs to be regenerated to reflect the change in the attribute (but not the symbol file and depending on the module the PWL file to be discussed in section \ref{gen_noise}).
+the component library file needs to be regenerated to reflect the change in the attribute (but not the symbol file and, depending on the module, the PWL file to be discussed in section \ref{gen_noise}).
 
 Every \cf{Simulation} object defines a couple of important \cf{File} objects that are always present regardless
 of the user's setup for LTspice. \cf{File}s are an extension of the Python Standard Library's \cf{Path} object that can additionally:
@@ -310,8 +310,8 @@ and without noise.
     effective nanowire with 16
     possibilities of a photon incidence. These elements have no delay between them, making
     them a simpler model that doesn't account for microwave properties of a nanowire.
-    The nanowire elements are connected to a $1\mathrm{k}\Omega$ to $50\Omega$ taper
-    biased by $15\mu$A. A gaussian noisy current source is added after the taper to
+    The nanowire elements are connected to a \qty{1}{\kilo\ohm} to \qty{50}{\ohm} taper
+    biased by \qty{15}{\micro\ampere}. A gaussian noisy current source is added after the taper to
     roughly simulate noise a nanowire might experience.
     The taper and noise source are dynamic models generated using spice-daemon.
     (b) Measurement at the circuit readout showcases our ability to resolve the number of
@@ -391,7 +391,7 @@ can verify that the correct noise distribution is being simulated inside LTspice
 This method  allows us to easily have multiple non-correlated noise sources each with an 
 arbitrary noise  distribution. Each source has a separate symbol and the noise 
 distributions are recalculated after each simulation under the invocation of the \cf{WatchDog}
-class. A spice-daemon generated current noise source is included in the photon number resolution 
+class. A spice-daemon-generated current noise source is included in the photon number resolution 
 example showcased in figure \ref{fig:taper_pnr}.
 
 \todo[]{noise example}
@@ -474,10 +474,7 @@ lumped approximation of the device and using them in your circuit.
 This type of modeling is sufficient for capturing the qualitative behavior of a device,
 but often is not identical to the response of the equipment in the lab.
 One solution to this is simulation using the direct scattering parameters - which is
-done in programs like Cadence PSpice, but not LTspice \todo[]{cite pspice}.
-
-\todo[]{another advantage is you can measure s param of entire setup. sim actions will
-always match setup :)}
+done in programs like Cadence PSpice, but not LTspice \cite{hspice}.
 
 \begin{figure}[h]
     \centering
@@ -486,7 +483,7 @@ always match setup :)}
     \label{fig:sxy}
 \end{figure}
 
-The scattering parameters (S-parameters), $S_{xy}$, of a $2$-port device describes the
+The scattering parameters (S-parameters) $S_{xy}$ of a $2$-port device describes the
 change in magnitude and phase a signal seen at $x$ relative to the signal 
 input into port $y$. This notion can be generatlize to multiple ports
 by taking successive measurements and termination the third port using a
