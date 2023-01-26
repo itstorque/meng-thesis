@@ -6,3 +6,4 @@ snspi/*.raw
 sparam/*.raw
 *.raw
 !reltol/*.raw
+ignore/

@@ -1,16 +1,16 @@
-\section{Model Stability} \label{stability}
+\chapter{Model Stability} \label{stability}
 
 When we start to care about modelling multiple nanowires and including more complicated dynamics
 (such as thermal devices, hTrons, or multiport nanowires, nTrons), the stability of the underlying
 base model is crucial. The nanowire model is the basis for all these models and is unreliable leading
-to switching behaviour due to its non-linearities constantly. The SPICE environment wasn't built to
+to switching behavior due to its non-linearities constantly. The SPICE environment wasn't built to
 handle harsh non-linearities such as the state non-linearity and therefore requires a careful
 analysis of how submodels interact together to guarantee the correctness and stability of the model.
 We introduce a simple enumerative method that can be used to debug non-linear (and linear) circuits
 and compare their stability. We then use this method to improve the stability of the nanowire model
 by changing the hotspot integrator.
 
-\subsection{Integration in SPICE}
+\section{Integration in SPICE}
 
 SPICE implementations in general rely on second-order integration, namely trapezoidal and Gear integration. LTspice allows the user to pick between 4 options: trapezoidal,
 Gear, (1st Order) Backward Euler and a proprietary modified trapezoidal method. In general,
@@ -45,7 +45,7 @@ numerical dampening \cite{ltspice-diff-post}.
     \label{fig:trapz_vs_gear}
 \end{figure}
 
-\subsection{Stability in Transient Simulations}
+\section{Stability in Transient Simulations}
 
 Stability of a finite element method is intimately related to the consistency and convergence of
 the method through the Dahlquist Equivalence Theorem \cite{DAHLQUIST}. 
@@ -85,7 +85,7 @@ the hotspot integrator.
     The orange space represents all the states (combinations of node voltages and currents) 
     that the circuit can be in. The experimentally-observed continuous dynamics of the nanowire follow
     the gray line's evolution between two points, the superconducting (s/c) state and the maximum resistance
-    state ($R_{peak}$). The system in the first plot encodes multiple simple configurations of superconducting nanowires, such as SNSPDs and relaxation oscillations, with the three axes being the behavioural sources in the nanowire model. A nanowire in the superconducting state starts at the (s/c) node. When a photon is incident, it begins to evolve around the path crossing through $R_{peac}$ and
+    state ($R_{peak}$). The system in the first plot encodes multiple simple configurations of superconducting nanowires, such as SNSPDs and relaxation oscillations, with the three axes being the behavioral sources in the nanowire model. A nanowire in the superconducting state starts at the (s/c) node. When a photon is incident, it begins to evolve around the path crossing through $R_{peac}$ and
     returning to the (s/c) node. The second diagram shows a finite approximation of this path that a solver
     might take, meanwhile producing the correct number of state transitions. The third diagram shows
     how a projection caused by a finite method could cause the wire to trigger twice. The finite method
@@ -93,7 +93,7 @@ the hotspot integrator.
     \label{fig:statespaceevolution}
 \end{figure}
 
-\subsubsection{Stability of the Nanowire Model} 
+\subsection{Stability of the Nanowire Model} 
 
 Boolean state non-linearities are integral to optimizing and training Neural Networks, and as a 
 result are a well studied concept. A common way of solving this issue is smoothening out the 
@@ -125,7 +125,7 @@ This forward propagation of error explains false switching events at timesteps t
 are too close together caused by a time-coupled element (more on that in \ref{malicious_circuits}).
 We see this in effect in figure \ref{fig:sweepbias} with multiple false switching events.
 
-\subsubsection{Relative Tolerance for the Nanowire Model} \label{reltol}
+\subsection{Relative Tolerance for the Nanowire Model} \label{reltol}
 
 \begin{figure}
     \centering
@@ -157,7 +157,7 @@ smaller than any node voltage (including the thermal integrator, more on that in
 the relative tolerance is a check performed on the entire circuit. This implies that the relative
 tolerance needs to satisfy this constraint on all logic inside the nanowire.
 
-\subsubsection{Behavioral Sources}
+\subsection{Behavioral Sources}
 
 Dependent sources are a powerful model in SPICE software that allows their output to be
 dependent on other node voltages and currents. Along with the multiple types
@@ -198,7 +198,7 @@ reliance on \cf{reltol}. They can also function as state variables and perform
 math on expressions that have varying output values -- such as performing math
 on outputs that differ by more than 6 orders of magnitude. 
 
-\subsection{Malicious Circuits} \label{malicious_circuits}
+\section{Malicious Circuits} \label{malicious_circuits}
 
 One method proposed to test for the stability of a nanowire model is by enumerating
 the number of false switching events. In the same fashion that the state nonlinearity
@@ -225,7 +225,7 @@ trivially. One workaround however, is simulating a circuit $C'=C+M$ that contain
 the original circuit $C$ and a new malicious circuit $M$. $M$ does not have to be coupled
 to $C$ topologically (a particularly simple and interesting case is when $M$ and $C$ are topologically
 decoupled: sharing no nodes, 
-currents or behavioural coupling).
+currents or behavioral coupling).
 $C$ and $M$ however are always time coupled: if $M$ exhibits a strong non-linearity
 and smaller timestepping to account for that, then the simulation of $C$ also experiences 
 finer timesteps. This time coupling allows
@@ -236,7 +236,7 @@ with a magnitude at least as big as $(\cf{voltol})/(\cf{reltol})$\todo[]{verify 
 as shown in figure \ref{fig:w_malicious_circ_diag}.
 This forces the simulator to use finer steps near the pulse edges and as a result
 introduces some timestep variation to $C$ as well. Another example malicious circuit 
-could be a one-way coupled circuit, such as a behavioural source with an output coupled
+could be a one-way coupled circuit, such as a behavioral source with an output coupled
 to a node in $C$ and amplifies its magnitude. This is equivalent to having the simulation
 tolerances be different for one node in the circuit.
 
@@ -279,7 +279,7 @@ This method can be extended to detect the stability of linear systems by couplin
 a non-linear discriminator $D$ to the circuit $C$ and testing the stability by simulating
 $C+D+M$. The discriminator $D$ needs amplify $\varepsilon$ deviations, the most straight-forward
 way of doing that projects a node value from $C$ onto a finite field. For instance $D$ 
-could be a behavioural source with an expression similar to $V=\cf{IF}(\cf{n001}>10\mathrm{u}, 1, 0)$ 
+could be a behavioral source with an expression similar to $V=\cf{IF}(\cf{n001}>10\mathrm{u}, 1, 0)$ 
 to couple to node \cf{n001} in circuit $C$. $D$ should have no effect on the operation of $C$,
 any operation change in $C$ is an indicator of instability of $C$.
 
@@ -287,7 +287,7 @@ any operation change in $C$ is an indicator of instability of $C$.
 
 % \subsubsection{Proof of Equivalence to Stability}
 
-\subsection{Improving the Nanowire Model}
+\section{Improving the Nanowire Model}
 
 Now that we have a method to measure the stability of a subcircuit, we can use that
 to measure and improve the nanowire model. The nanowire model's constituent subcircuits are
@@ -296,7 +296,7 @@ score. Using that method, we can highlight what subcircuits of the nanowire mode
 and change the topology such that their governing dynamics are the same as the old subcircuit
 but don't impose the same instability over the timestepping algorithm.
 
-\subsubsection{Current nanowire model}
+\subsection{Current nanowire model}
 \label{current_nw}
 
 Berggren et al.'s nanowire model comprises of four sub-circuits outlined in figure \ref{fig:old_nw}. The main subcircuit (subcircuit a), consists of a
@@ -389,20 +389,20 @@ at 0, ramping to a value and let it rest there for a bit. This is a by-product
 of LTspice not recognizing meta-stable systems. This is tackled by the new 
 simulator introduced in section \ref{julia-sim-chapter}.
 
-\subsubsection{Stability of the original nanowire model}
+\subsection{Stability of the original nanowire model}
 
 By varying the relative tolerance and testing different geometries, the value $10^{-6}$
 seems to perform the best in terms of stability and accuracy. By testing the LC tank
 geometry shown in \ref{fig:tank_circ} using a nanowire and swapping it with a linear 
 inductor, we can test several \cf{reltol} values and see if we see the expected 
-oscillation behaviour. Intuitively, as the relative tolerance value used gets smaller,
+oscillation behavior. Intuitively, as the relative tolerance value used gets smaller,
 the circuit should be ``more correct'' than when allowing for a bigger tolerance.
-For the nanowire model, we don't see that behaviour. Relative tolerances between $10^{-3}$
+For the nanowire model, we don't see that behavior. Relative tolerances between $10^{-3}$
 and $10^{-7}$
 consistently worked in our tests, producing a sinusoidal oscillation. Values
 above $10^{-7}$ either switch into the resistive state and lose all the energy immideatly
 or oscillate in a decaying fashion. Meanwhile, for the SNSPD readout configuration,
-we see consistently better behaviour using the malicious circuits method presented in
+we see consistently better behavior using the malicious circuits method presented in
 \ref{malicious_circuits} as we go from $10^{-3}$ to $10^{-6}$ across photon events
 and relaxation oscillations.
 
@@ -417,7 +417,7 @@ incident, and (4) relaxation oscillation regime. We test these different regimes
 using one circuit with one nanowire element across \cf{reltol} values of $10^{-3}$
 and $10^{-6}$ and compare it to the expected solution.
 
-\subsubsection{Different Integrator}
+\subsection{Different Integrator}
 
 The malicious circuits analysis on the old model indicated
 that the integrator circuit is the main source of instability. 
@@ -442,12 +442,23 @@ to ground in figure \ref{fig:old_nw}. When the $v_2=0$ (wire is superconducting)
 the integrator resets to the initial condition $0$.
 
 The previous nanowire model also involved the switch toggling between the off and on
-state with resistances of $1$m$\Omega$ and $10$G$\Omega$. This switching behaviour
+state with resistances of $1$m$\Omega$ and $10$G$\Omega$. This switching behavior
 introduces a strong non-linearity that can be better handled by the reset method
 used by the \cf{sdt} command. In SPICE, a resistance changing value by an order of
 $10^6$ instantly is unstable, let alone a magnitude of $10^{15}$. This magnitude
 change coupled with using a lower \cf{reltol} leads to a large instability that
 should be avoided.
+
+Replacing $\frac{1}{2}\left(x+|x|\right)$ with an IF statement (or limit) allows the circuit matrix compiler to
+have an easier time optimizing the simulation. The evaluation of this statement results in $x$ if $x>0$, otherwise
+$0$.
+While $\frac{1}{2}\left(x+|x|\right)$ preserves continuity,
+a carefully crafted IF statement can exhibit the same continuity. This implies that no advantage from a
+convergence standpoint is offered, however, the compiler has to perform multiple operations instead of
+evaluating one conditional. The limit math command is a built-in way of handling this as well, where the
+lower limit is $0$ and the upper limit is the peak hotspot resistance. While the implementation of the limit
+command is unknown, its implementation (and accompanying optimization) should intuitively be similar to that
+of an IF statement. These two methods also allow for greater readability than the absolute value conditional.
 
 \begin{figure}
     \centering
@@ -503,12 +514,75 @@ a combined measurable ($R_{\mathrm{hotspot}} = \frac{v_1 - v_{\mathrm{source}}}{
     \label{fig:not_jumbled_mess}
 \end{figure}
 
-[TODO] Compare figure \ref{fig:not_jumbled_mess} to the original figure \ref{fig:sweepbias}.
-Notice how a higher resistance max value corresponds to a faster decay - probably the current
-being routed into the inductor faster.
+We can see the same sweep performed on the original nanowire in figure \ref{fig:sweepbias}
+performed on the model with improved stability in figure \ref{fig:not_jumbled_mess}. We can see
+a smooth gradient of responses form as the bias increases (as opposed to random activity seen
+in the old model). This is expected, as the device should experience one harsh state non-linearity.
+After that transition, the system to should be continuously non-linear in a fashion that can be simulated
+by transient simulations accurately. We also can see the hotspot peak resistance increase smoothly
+with the bias current in the new model, while witnessing the hotspot decaying faster. This showcases
+that our model is directing current to the shunt at a faster rate -- allowing the wire to cool back into the
+superconducting state earlier on.
 
-Talk about choosing between bounding with limit and if(x) instead of $x+|x|$
+\subsection{1-Element Models}
 
-\subsubsection{1 Element Models}
+Collapsing a sub-circuit to one element can provide speed and convergence advantages, especially for
+nonlinear elements, at the risk of instability past a certain point. This method can be useful in
+applications where the nanowire is used in one configuration repeatedly. For example, in the SNSPI
+model generated in section \ref{snspi_dyn_model}, replacing the nanowire element with a behavioral
+one-element model that spikes the resistance upon a photon incidence without integrating the entire
+hotspot velocity. This can be done by precomputing the effect of the bias in a program like spice-daemon
+and reusing that computed value or by loading multidimensional PWL tables into LTspice.
 
-\subsubsection{0 Resistance Models}
+A good resource for one-element models are behavioral sources (b-sources). B-sources can operate
+in the voltage (BV source) and current source (BI source) mode with their outputs set by an arbitrary 
+maths expression
+which can be a function of global parameters such as node values. B-sources can also behave
+as behavioral resistors (BR) and power sources (BP), these two modes aren't well documented.
+BR sources are useful candidates for modelling hotspots, as they can have a 0 resistance that spikes
+to the hotspot peak resistance. The tolerances are more lenient for a BR than a BV source across
+a resistor. The nanowire model has a small $10^{-3}\omega$ resistance, which is inconsequential for
+most simulations. Care should be taken when using a BR source starting at zero resistance as it
+may cause convergence issues if nonlinear effects trigger smaller timesteps near the switching
+threshold.
+
+Precomputing switching behavior outside LTspice can be done by modelling any complicated thermal
+model in outside software and imported into LTspice via \cf{spice-daemon}. This could involve stripping
+nanowires from the hotspot integrator and having voltage spikes output across it as a normal
+nanowire would given the bias the resistor is experiencing. Since \cf{spice-daemon} can access
+simulation data, the nanowire bias can be deduced either explicitly from the YAML file or by
+running an initial DC simulation to determine the nanowire bias.
+
+Multidimensional tables can also be computed for nanowires and imported into LTspice. LTspice doesn't
+support 2D tables or interpolation, it only supports 1D piece-wise-linear (PWL) interpolation. This
+however can be overloaded using the \cf{mod} function to define a well-convergent 2D interpolation 
+space using a 1D mapping. For example, a 2D map on $x, y$ evaluating to $f(x, y)$ can be encoded 
+by enumerating each square with the diagonal points $(x, y)$ and $(x+\Delta x, y + \Delta y)$ and 
+computing $f$ at the corners of each square. This
+enumeration is linear, one general example mapping is $M(x, y) = \frac{1}{k_x}\floor{k_xx}+G\cdot \frac{1}{k_y}\floor{k_yy}$ where
+$k_x, k_y$ are related to the resolution ($\Delta x, \Delta y$) and $G$ is related to $\max{x}$
+and $k_x$. 
+The mapping $M(x, y)$ evaluates to one unique number for each pair $x, y$ on the corners
+of the squares. We can now interpolate any function $f$ across that range for any two query points 
+$x', y'$ by evaluating
+a function $f$ over the points $M(x, y), M(x+\Delta x, y), M(x, y+\Delta y), M(x+\Delta x, y+\Delta y)$.
+The weighted sum of these evaluations is a 2D linear interpolation. A different simpler method could be
+used (such as rounding) for a 2D table with no interpolation. The basic principle for encoding higher 
+order maps into LTspice is to convert
+the space to a finite enumerated map, compute the target function over the corners of each square and
+encode that using the \cf{table} math command. 
+
+These models require less operations and checks per iteration, allowing for faster compute. 
+These models are ideal for large scale simulation, such as simulating thousands of nanowires.
+Using
+a behavioral source with finitely many operations takes less than 6 operations per iteration and
+acts on one node. Even in a sparse setting, arbitrary subcircuits span multiple entries and force
+a larger number of operations a second - many resulting from individual \cf{reltol} (and other tolerance)
+checks. Using a macro-model to encode the behavior of the nanowire decreases the number of possible
+stability issues. However, these macro-models encode a finite number of interactions, and as such, can 
+act in a behavior that seems correct (since it is hard coded) when it is not. This motivates being
+extra careful with models designed for high performance and large-scale system modeling. Having an
+environment controlled check to validate the sensibility of a circuit output is a useful add-on. For
+example, having the pre-compute workflow in \cf{spice-daemon} compute the behvioral model and the
+post-compute workflow check that when the nanowire switched, the current in the device was above
+the critical current, a photon was incident, etc. 

@@ -1,7 +1,33 @@
-\documentclass[]{article}
-% \includeonly{chapters/3-malicious.tex}
+% -*- Mode:TeX -*-
 
+%% IMPORTANT: The official thesis specifications are available at:
+%%            http://libraries.mit.edu/archives/thesis-specs/
+%%
+%%            Please verify your thesis' formatting and copyright
+%%            assignment before submission. If you notice any
+%%            discrepancies between these templates and the 
+%%            MIT Libraries' specs, please let us know
+%%            by e-mailing thesis@mit.edu
 
+%% The documentclass options along with the pagestyle can be used to generate
+%% a technical report, a draft copy, or a regular thesis. You may need to
+%% re-specify the pagestyle after you \include cover.tex. For more
+%% information, see the first few lines of mitthesis.cls. 
+
+%\documentclass[12pt,vi,twoside]{mitthesis}
+%%
+%%  If you want your thesis copyright to you instead of MIT, use the
+%%  ``vi'' option, as above.
+%%
+%\documentclass[12pt,twoside,leftblank]{mitthesis}
+%%
+%% If you want blank pages before new chapters to be labelled ``This
+%% Page Intentionally Left Blank'', use the ``leftblank'' option, as
+%% above. 
+
+\documentclass[12pt,twoside]{mitthesis}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[utf8]{inputenc}
 % formatting imports
 \usepackage{graphicx}
@@ -40,16 +66,7 @@
 \usepackage{longtable}
 \usetikzlibrary{arrows}
 
-\usepackage[sorting=none]{biblatex}
-\addbibresource{refs.bib}
-
-% \usepackage[textsize=tiny]{todonotes}
-% \newcommand{\todoref}[2][]{\todo[color=cyan!40, #1]{\textbf{ref:}\\#2}}
-% \newcommand{\todoidkcite}[2][]{\todo[color=cyan!10, #1]{\textbf{ref:}\\#2}}
-% \newcommand{\todofig}[2][]{\todo[color=red!40, #1]{\textbf{fig:}\\#2}}
-% \newcommand{\todoidea}[2][]{\todo[color=green!40, #1]{\textbf{idea:}\\#2}}
-% \newcommand{\todoexplain}[2][]{\todo[color=purple!40, #1]{\textbf{details:}\\#2}}
-% \newcommand{\todooptional}[2][]{optional \todo[color=grey!10, #1]{#2}}
+% \usepackage[sorting=none]{biblatex}
 
 \newcommand{\todoref}[2][]{}
 \newcommand{\todoidkcite}[2][]{}
@@ -77,86 +94,50 @@
 \newcommand{\amps}[0]{\ampere}
 \newcommand{\muamps}[0]{\micro\ampere}
 
-\title{IGNORE THIS PAGE IN CURRENT VERSION}
+% \addbibresource{main.bib}
+
+% \title{IGNORE THIS PAGE IN CURRENT VERSION}
 
 \DeclareUnicodeCharacter{2212}{-}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{lgrind}
+%% These have been added at the request of the MIT Libraries, because
+%% some PDF conversions mess up the ligatures.  -LB, 1/22/2014
+\usepackage{cmap}
+\usepackage[T1]{fontenc}
+\pagestyle{plain}
+
+%% This bit allows you to either specify only the files which you wish to
+%% process, or `all' to process all files which you \include.
+%% Krishna Sethuraman (1990).
+
+%\typein [\files]{Enter file names to process, (chap1,chap2 ...), or `all' to process all files:}
+\def\all{all}
+\ifx\files\all \typeout{Including all files.} \else %\typeout{Including only \files.} \includeonly{\files} \fi
+
 \begin{document}
 
-% \listoftodos
-
-\doublespacing
-
-\maketitle
-
-\begin{center}
-    Massachusetts Institute of Technology \\
-    Department of Electrical Engineering and Computer Science
-\end{center}
-
-\begin{center}
-    Proposal for Thesis Research in Partial Fulfillment\\ of the Requirements for the Degree of\\
-Masters of Engineering
-\end{center}
-
-\vfill
-
-\begin{tabular}{rl}
-\textbf{Title:} & \textbf{Defect Identification in Superconducting 2-Terminal Devices} \\
-\\
-\textbf{Submitted by:} & T. Dandachi \\
-              & 69 Chestnut St. \\
-              & Cambridge, MA 02139
-\end{tabular}
-
-\vspace{15mm}
-\begin{tabular}{@{}p{1.5in}p{4in}@{}}
-\textbf{Signature of author:} & \hrulefill \\
-\end{tabular}
-
-\vfill
-
-\textbf{Expected Date of Completion:} May 2022
-
-\vfill
-
-\textbf{Laboratory:} Quantum Nanostructures and Nanofabrication under the Research Laboratory for Electronics
-
-\vfill
-
-\textbf{Abstract:}
-
-Simulating the operation of a superconducting device
-
-\vfill
-
-\textbf{Supervision Agreement:}
-
-The program outlined in this proposal is adequate for a Master's thesis. The supplies and facilities required are available, and I am willing to supervise the research and evaluate the thesis report.
-
-\vspace{15 mm}
-\begin{tabular}{@{}p{1.5in}p{4in}@{}}
-  & \hrulefill \\
-& K. K. Berggren, Prof. of Elec. Eng.
-\end{tabular}
-
-\newpage
-
-\tableofcontents
-
-\newpage
-
-% figures are here: https://www.icloud.com/keynote/094kHrSTQlvohxqCHGUmZJXcg#thesis
+\include{cover}
+% Some departments (e.g. 5) require an additional signature page.  See
+% signature.tex for more information and uncomment the following line if
+% applicable.
+% \include{signature}
+\pagestyle{plain}
+\include{contents}
 
 \include{chapters/1-intro.tex}
 \include{chapters/2-spice-daemon.tex}
 \include{chapters/3-malicious.tex}
 \include{chapters/4-julia.tex}
 
-\newpage
+% \appendix
+% \include{appa}
+% \include{appb}
 
-% \bibliographystyle{asmeconf}
-\begin{sloppypar}
-\printbibliography
-\end{sloppypar}
-
+\include{biblio}
 \end{document}
+

@@ -1,5 +1,5 @@
 \begin{sloppypar}
-\section{\cf{\cf{spice-daemon}} ---\hspace{20px} a Python wrapper for SPICE solvers}
+\chapter{\cf{\cf{spice-daemon}} -- a Python wrapper for SPICE solvers}
 \end{sloppypar}
 % \cf{spice-daemon} and \cf{qnn-spice}
 
@@ -10,7 +10,7 @@ version track all the models produced by MIT's Quantum Nanostructures and Nanofa
 group using the traditional git workflow. \cf{spice-daemon} is a python package that adds 
 new functionality such as hyperparametrized models, noise and post-processing to LTspice.
 
-\subsection{SPICE}
+\section{SPICE}
 
 One popular way of simulating electronics is using SPICE 
 (Simulation Program with Integrated Circuit Emphasis). 
@@ -27,7 +27,7 @@ particularly care about transient analysis where the solver
 is based on a piece-wise finite method using dynamic timestepping fitted to a 
 low-order polynomial \cite{spice-book}.
 
-\subsubsection{Interfacing with LTspice}%Netlists and Schematic Capture}
+\subsection{Interfacing with LTspice}%Netlists and Schematic Capture}
 \label{interfacing_with_ltspice}
 
 Interfacing with SPICE software involves generating a netlist --- a code snippet that defines
@@ -59,7 +59,7 @@ For example, the \cf{.tran} directive sets up a transient simulation with a spec
 optional parameters). If an undefined directive is specified, for example, misspelling \cf{.tarn} instead of \cf{.tran}, it is passed to the netlist normally, and upon running a simulation, a warning is raised
 with no effect on the simulation output.
 
-\subsubsection{Models}
+\subsection{Models}
 
 Regular SPICE models are composed of two main types of files, symbol (\ccf{.asy}) and library
 (\ccf{.lib}) files. A symbol file defines the visual metaphor used by the schematic capture
@@ -91,7 +91,7 @@ while still being able to use the most up to date version. This issue is address
 
 % Wrapper for spice solvers like LTspice.}
 
-\subsection{Installing \cf{spice-daemon} and \cf{qnn-spice} }
+\section{Installing \cf{spice-daemon} and \cf{qnn-spice} }
 
 Installing \cf{qnn-spice} and \cf{spice-daemon} can be done by cloning the repositories
 and symbolically linking the update bash script and \cf{spice.py} files, from each repository
@@ -105,7 +105,7 @@ flexible control through python scripts -- this is ideal for more optimized work
 large parameter sweeps, niche post-processing types or experiment-simulation hybrid
 setups.
 
-\subsection{\cf{qnn-spice}} \label{qnn-spice}
+\section{\cf{qnn-spice}} \label{qnn-spice}
 
 In a collaborative setup where SPICE models might be edited (either continuously or with infrequent small fixes), 
 having the ability to track the version of the models is important. One solution is to include a version 
@@ -178,7 +178,7 @@ any overhead.
 
 \todoexplain[inline]{Include library location? vs. repo loc.}
 
-\subsection{\cf{spice-daemon} assisted LTspice simulations}\label{sd_models}
+\section{\cf{spice-daemon} assisted LTspice simulations}\label{sd_models}
 
 The main input for \cf{spice-daemon} is a YAML -- a human-readable data-
 serialization language -- file that defines simulation parameters, \cf{spice-daemon} models, and
@@ -272,14 +272,14 @@ can infer what files have to be regenerated.
 % the simulation time and steps parameters as well as other user (or daemon) specified simulation parameters.
 % This file contains all the 
 
-\subsection{Dynamic Models} \label{dyn_models}
+\section{Dynamic Models} \label{dyn_models}
 
 LTspice components are able to be parameterized using a constant global parameter space that can be used when
 math expressions are being evaluated (such as the output voltage of a behavioral source or the inductance 
 of an inductor). \cf{spice-daemon} adds the ability to hyperparameterize components beyond expressions by granting the
 ability to create a PWL file and modify the netlist (circuit topology) of the model between runs.
 
-\subsubsection{Lumped Element Transmission Lines and Tapers}\label{tapers_section}
+\subsection{Lumped Element Transmission Lines and Tapers}\label{tapers_section}
 
 One type of dynamic model that is incorporated into \cf{spice-daemon} is lumped 
 element transmission lines. Instead of using LTspice's built-in transmission
@@ -371,7 +371,7 @@ and without noise.
 
 \todofig[]{pnr}
 
-\subsubsection{Generating Noise} \label{gen_noise}
+\subsection{Generating Noise} \label{gen_noise}
 
 \todoref[]{somewhere: cite adam_noise}
 \todoref[]{@INPROCEEDINGS{8990925,
@@ -443,7 +443,7 @@ example showcased in figure \ref{fig:taper_pnr}.
 
 \todo[]{noise example}
 
-\subsubsection{Creating a new dynamic model -- an SNSPI}
+\subsection{Creating a new dynamic model -- an SNSPI} \label{snspi_dyn_model}
 
 This section will walk through making an SNSPI dynamic model to highlight the benefits
 of hyperparametrization and serve as a tutorial for extending the \cf{spice-daemon} dynamic model library. 
@@ -514,7 +514,7 @@ highly non-linear behavioral sources and switches from figure \ref{fig:old_nw} a
 the dependency graph collapses
 to only one node in figure \ref{fig:dependency_graph}).
 
-\subsection{Arbitrary modeling using scattering parameters}
+\section{Arbitrary modeling using scattering parameters} \label{sparammodels}
 
 Modeling experimental equipment, such as a coax cable or bias-tee, involves making a 
 lumped approximation of the device and using them in your circuit. 
@@ -546,7 +546,7 @@ define the frequency behavior of the device \cite{microsim}. An accompanying \cf
 module (\cf{spice-arbnport}) can generate a model with this topology
 automatically given the scattering parameters measured for a device.
 
-\subsubsection{2-port model}
+\subsection{2-port model}
 
 \begin{figure}
     \centering
@@ -655,7 +655,7 @@ For instance, characterizing a coax line of a certain length gives an accurate r
 in simulation. Another example is using characterizing filters and running a sweep on them to
 decide which filter is the best for a certain application.
 
-\subsubsection{n-port model}
+\subsection{n-port model}
 
 \begin{figure}
     \centering
@@ -686,7 +686,7 @@ matter. For instance, in a 3-port device where port 0 either reflects the entire
 signal or transmits it to port 1, we don't need to include the source on branch \cf{M2}
 that is a function of port 0.
 
-\subsubsection{Inaccuracy of S-parameter Modeling in Transient Analysis}
+\subsection{Inaccuracy of S-parameter Modeling in Transient Analysis}
 
 \begin{figure}
     \centering
@@ -724,7 +724,7 @@ which corresponds to a sharp pole of the filter's transmittance.
 % trapezoidal ringing. The effect is still there with Gear integration 
 % (and about doubles in frequency).
 
-\subsection{Post-processing using \cf{spice-daemon} Toolkits}
+\section{Post-processing using \cf{spice-daemon} Toolkits}
 
 While LTspice transient simulations are sufficient for characterizing the time behavior of a superconducting 
 circuit, an optimized simulation environment should have the ability to post-process the data 
@@ -774,7 +774,7 @@ get really large for a smooth signal if all the datapoints are concentrated arou
 (rising edge of an SNSPD) and can be changed by adding the optional parameter \cf{dt} that defines 
 the minimum timestep to extrapolate from.
 
-\subsubsection{IV curves}
+\subsection{IV curves}
 
 IV (current-voltage) curves are an important tool for characterizing the operational margin for a device and ensuring the device was fabricated according to the design. By plotting the current passing through the device as a function of the applied voltage, 
 IV curves provide valuable information about the device's behavior: the critical current, 
@@ -797,7 +797,7 @@ simulating hysteresis and (2) the nanowire model is not DC-compatible (discussed
 
 \todo[inline]{example of IV curve obtained from sd}
 
-\subsubsection{Power Spectral Density}
+\subsection{Power Spectral Density}
 
 The Power Spectral Density (PSD) of a signal is a useful tool for designing and studying
 superconducting single-photon detectors. It is a 
@@ -817,7 +817,7 @@ it allows for the use of windowing functions.
 
 \todo[inline]{example of a PSD to replicate noise input}
 
-\subsubsection{Output Methods}
+\subsection{Output Methods}
 
 Post-processing modules need to somehow display the signal back to the user. \cf{spice-daemon} handles this
 in one of two ways. The preferred method of displaying a plot uses matplotlib to spawn a separate window

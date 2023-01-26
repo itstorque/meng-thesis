@@ -1,4 +1,4 @@
-\section{Introduction}
+\chapter{Introduction}
 
 The non-linear behavior of superconducting nanowires is a crucial aspect of many of their applications, including superconducting nanowire single-photon detectors (SNSPDs) and neuromorphic computing \cite{snspd_original_paper, spiking_nn}. However, this non-linearity also makes it challenging to simulate nanowires, particularly when considering their microwave properties. One common method of simulating these nanowire electronics relies on existing circuit simulation environments \cite{karl_spice}. These environments were optimized for classical electronics and lack optimizations that account for the microwave and superconducting characteristics of the models.
 
@@ -15,7 +15,7 @@ by introducing wrappers around existing SPICE software, a method for quickly
 assessing simulation stability and present the building blocks for a new
 nanowire electronics simulator built in Julia.
 
-\subsection{Non-linearity in superconducting nanowires}\label{nonlinearity}
+\section{Non-linearity in superconducting nanowires}\label{nonlinearity}
 
 Superconducting nanowires are highly non-linear and present three main forms of non-linearity:
 (1) kinetic inductance, (2) normal-superconducting state transitions and
@@ -44,7 +44,7 @@ the solver enters a loop making the time step smaller until the magnitude of cha
 In Boolean states, there is no sense of continuity, and in the limit of smaller time steps, the 
 change in response magnitude will be just as large. 
 
-\subsection{Nanowire Elements}
+\section{Nanowire Elements}
 
 From an electronics standpoint, a nanowire's lumped model is a non-linear inductor when superconducting. When resistive, an additional resistor is in series with that inductor.
 These two building blocks (a continuously non-linear inductor and a discrete non-linear
@@ -82,7 +82,7 @@ is essential \cite{distributed_nanowire_model}. Not doing so neglects distribute
 
 \todoidea[inline]{CPW geometry}
 
-\subsubsection{SNSPDs}
+\subsection{SNSPDs}
 
 One geometry a nanowire circuit can be designed to be in is the superconducting nanowire 
 single-photon detector (SNSPD) circuit. By having a nanowire meander biased near
@@ -125,7 +125,7 @@ current periodically being diverted into and out of the resistive shunt.
 These relaxation oscillations consist of periodically repeating SNSPD spikes, 
 similar to a switching event.
 
-\subsubsection{SNSPIs} \label{snspi_intro}
+\subsection{SNSPIs} \label{snspi_intro}
 
 Superconducting nanowire single-photon imagers (SNSPIs) are used in a similar fashion
 to SNSPDs but take advantage of the distributed picture for longer nanowire meanders
@@ -153,7 +153,7 @@ a nanowire can be thought of as a long chain of discrete lumped nanowire element
 with linear capacitor elements as shown in figure \ref{fig:snspi_tline}. This topology captures the distributed picture of
 pulses propagating in nanowire meanders and allows us to simulate SNSPIs.
 
-\subsubsection{Impedance Matching Tapers} \label{tapers_intro}
+\subsection{Impedance Matching Tapers} \label{tapers_intro}
 
 Usually, the nanowire's impedance is not similar enough to that of the input and output circuitry. This mismatch causes the signal to reflect back into the wire instead 
 of propagating into the next stage, causing interference and distortions. Impedance 
@@ -211,7 +211,7 @@ of the wire \cite{Akhlaghi:12}. Impedance matching and the folding of
 the wire are both sources of distortions
 to signals travelling down the meander. As a result accurate simulation requires the ability to account for both the taper reshaping and the coupling of the folds.
 
-\subsubsection{hTron}
+\subsection{hTron}
 
 A nanowire's accessible state space is limited by its current thermal state.
 Since the nanowire is also a thermal system that can generate heat,
@@ -237,7 +237,7 @@ and dissipation.
 
 \todo[]{reuse rezas thermal transport block diagram? and ref+cite it}
 
-\subsection{Problems Simulating Nanowires}
+\section{Problems Simulating Nanowires}
 
 A full-model that simulates all the dynamics of superconducting nanowires is hard to achieve
 due to the complexity, long simulation time and convergence issues
@@ -291,7 +291,8 @@ non-linearity presented by kinetic inductance, but not the state transition non-
 These methods can generate scattering parameters that are dependent on frequency and
 magnitude to account for the non-linearity.
 JosephsonCircuits.jl for instance is designed
-to simulate JTWPA topologies in the frequency domain using Harmonic Balance \cite{josephsoncircsjl}. WRspice
+to simulate Josephson Traveling Wave Parametric Amplifiers (JTWPA) topologies in the frequency 
+domain using Harmonic Balance \cite{josephsoncircsjl}. WRspice
 and Xyce both have Harmonic Balance backends that are very efficient \cite{wrspice, xyce_reference}. However,
 for topologies that utilize the binary-state non-linearity, time-domain simulation 
 is needed to characterize the device behavior. Given the nature of WRspice and Xyce,
